@@ -7,6 +7,6 @@ use App\Http\Controllers\InicioUser_Controller;
 
 Route::get('/', [HomeControler::class,'index']);
 Route::get('/inicio_admin',[Inicioadmin_Controller::class,'inicio_admin'])->name('IniAdmin');
-Route::get('/inicio_user',[InicioUser_Controller::class,'inicio-user'])->name('IniUser');
+Route::get('/inicio_user',[InicioUser_Controller::class,'inicio_user'])->name('IniUser');
 
 
