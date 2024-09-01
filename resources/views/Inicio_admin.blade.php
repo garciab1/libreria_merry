@@ -127,7 +127,7 @@
                                 <div class="card-body">
                                     <img src="{{ asset('images/venta.png') }}" alt="Descripción de la imagen" width="100">
                                     <br><br>
-                                    <a href="#" class="btn btn-primary">Realizar venta</a>
+                                    <a href="realizarVentaAdmin" class="btn btn-primary">Realizar venta</a>
                                 </div>
                             </div>
                         </div>

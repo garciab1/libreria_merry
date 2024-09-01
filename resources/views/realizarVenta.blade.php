@@ -139,7 +139,9 @@
                         <tr>
                             <td>${articulo.nombre}</td>
                             <td>${articulo.disponibilidad}</td>
-                            <td><button type="button" class="btn btn-primary btn-sm agregarArticulo" data-nombre="${articulo.nombre}">Agregar</button></td>
+                            <td>
+                            <button type="button" class="btn btn-primary btn-sm agregarArticulo" data-nombre="${articulo.nombre}">Agregar</button>
+                            </td>
                         </tr>
                     `;
                     vistaPrevia.insertAdjacentHTML('beforeend', nuevaFila);
@@ -159,11 +161,12 @@
                             <td>${nombreArticulo}</td>
                             <td>50</td>
                             <td>$100</td>
-                            <td><input type="number" value="1" class="form-control"></td>
+                            <td><input type="number" value="1" class="form-control"></td> 
                             <td>$100</td>
                             <td><button type="button" class="btn btn-danger btn-sm eliminarArticulo">Eliminar</button></td>
                         </tr>
                     `;
+                    //Falta validar que los números no sean negativos
 
                     document.getElementById('listaArticulos').insertAdjacentHTML('beforeend', nuevaFila);
                 }

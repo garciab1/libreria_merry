@@ -56,7 +56,7 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Nuevo Producto</a>
+                            <a href="/realizarVenta" class="sidebar-link">Nuevo Producto</a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">Productos y Stock</a>
