@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="icon" href="{{asset('images/icono.png')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
@@ -30,10 +31,10 @@
         <aside id="sidebar">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
+                    <img src="{{asset('images/icono.png')}}" alt="" style="height: 30px">
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Libreria Merry</a>
+                    <a href="{{ route('IniAdmin') }}">Libreria Merry</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
@@ -44,7 +45,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{route('RealizarVenta')}}" class="sidebar-link">
                         <i class="lni lni-coin"></i>
                         <span>Realizar venta</span>
                     </a>
@@ -60,7 +61,7 @@
                             <a href="#" class="sidebar-link">Nuevo Producto</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Productos y Stock</a>
+                            <a href="{{ route('ProductosStock') }}" class="sidebar-link">Productos y Stock</a>
                         </li>
                     </ul>
                 </li>
@@ -90,13 +91,13 @@
                 </li>
                 -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('HistorialVentas') }}" class="sidebar-link">
                         <i class="lni lni-hourglass"></i>
                         <span>Historial de ventas</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="{{ route('Empleados') }}" class="sidebar-link">
                         <i class="lni lni-briefcase"></i>
                         <span>Empleados</span>
                     </a>

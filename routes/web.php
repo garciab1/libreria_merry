@@ -9,6 +9,10 @@ use App\Http\Controllers\RealizarVenta_Controller;
 use App\Http\Controllers\RealizarVentaAdmin_Controller;
 use App\Http\Controllers\AgregarProducto_Controller;
 use App\Http\Controllers\AgregarProductoAdmin_Controller;
+use App\Http\Controllers\CrearUsuario_Controller;
+use App\Http\Controllers\Empleados_Controller;
+use App\Http\Controllers\HistorialVentas_Controller;
+use App\Http\Controllers\ProductosStock_Controller;
 
 Route::get('/', [HomeControler::class,'index']);
 Route::get('/inicio_admin',[Inicioadmin_Controller::class,'inicio_admin'])->name('IniAdmin');
@@ -18,3 +22,10 @@ Route::get('/realizarVentaAdmin',[RealizarVentaAdmin_Controller::class,'realizar
 Route::get('/AgregarProducto',[AgregarProducto_Controller::class,'AgregarProducto'])->name('AgregarProducto');
 Route::get('/AgregarProductoAdmin',[AgregarProductoAdmin_Controller::class,'AgregarProductoAdmin'])->name('AgregarProductoAdmin');
 
+Route::get('/ProductosStock',[ProductosStock_Controller::class,'ProductosStock'])->name('ProductosStock');
+
+Route::get('/HistorialVentas',[HistorialVentas_Controller::class,'HistorialVentas'])->name('HistorialVentas');
+
+Route::get('/Empleados',[Empleados_Controller::class,'Empleados'])->name('Empleados');
+
+Route::get('/CrearUsuario',[CrearUsuario_Controller::class,'CrearUsuario'])->name('CrearUsuario');

@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/stock.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="#" class="btn btn-primary">Productos y stock</a>
+                        <a href="{{ route('ProductosStock') }}" class="btn btn-primary">Productos y stock</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/historial.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="#" class="btn btn-primary">Historial de ventas</a>
+                        <a href="{{ route('HistorialVentas') }}" class="btn btn-primary">Historial de ventas</a>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/empleado.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="#" class="btn btn-primary">Empleados</a>
+                        <a href="{{ route('Empleados') }}" class="btn btn-primary">Empleados</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/usuario.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="#" class="btn btn-primary">Crear Usuario</a>
+                        <a href="{{ route('CrearUsuario')}}" class="btn btn-primary">Crear Usuario</a>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/stock.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="#" class="btn btn-primary">Productos y stock</a>
+                        <a href="{{ route('ProductosStock') }}" class="btn btn-primary">Productos y stock</a>
                     </div>
                 </div>
             </div>
