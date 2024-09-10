@@ -13,6 +13,15 @@ use App\Http\Controllers\CrearUsuario_Controller;
 use App\Http\Controllers\Empleados_Controller;
 use App\Http\Controllers\HistorialVentas_Controller;
 use App\Http\Controllers\ProductosStock_Controller;
+use App\Http\Controllers\Firebase\ContactController;
+
+//Rutas creadas para uso de la base de datos
+Route::get('productos', [ContactController::class, 'index']);
+Route::get('add-product', [ContactController::class, 'create']);
+Route::post('add-product', [ContactController::class, 'store']);
+
+
+
 
 Route::get('/', [HomeControler::class,'index']);
 Route::get('/inicio_admin',[Inicioadmin_Controller::class,'inicio_admin'])->name('IniAdmin');
