@@ -1,5 +1,6 @@
 @extends('Firebase.Contact.app')
 
+@section('title', 'Productos')
 @section('content')
 
 <div class="container">
