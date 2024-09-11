@@ -54,13 +54,31 @@ class EmpleadosController extends Controller
         $key = $id;
         $editData = $this->database->getReference($this->tablename)->getChild($key)->getValue();
         if($editData){
-            return view('Firebase.Empleados-Usuarios.edit_empleado', compact('editData'));
+            return view('Firebase.Empleados-Usuarios.edit_empleado', compact('editData', 'key'));
         }
         else{
             return redirect('empleados2')->with('status', 'ID del Empleado no encontrado');
         }
-        
-        
+    }
+
+    public function updateEmpleado(Request $request, $id){
+        $key = $id;
+        $updateData = [
+            'nombre_usuario' => strtoupper($request->nombre_usuario),
+            'apellido_usuario' => strtoupper($request->apellido_usuario),
+            'telefono' => $request->telefono,
+            'fechaNacimiento' => $request->fechaNacimiento,
+            'usuario' => $request->usuario,
+            'password' => $request->password,
+
+        ];
+        $res_updated = $this->database->getReference($this->tablename.'/'.$key)->update($updateData);
+        if($res_updated){
+            return redirect('empleados2')->with('status', 'Empleado actualizado exitosamente.');
+        }
+        else{
+            return redirect('empleados2')->with('status', 'Empleado no actualizado.');
+        }
 
     }
     

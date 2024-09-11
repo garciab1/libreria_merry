@@ -8,8 +8,9 @@
                         <h4>Editar usuario <a href="{{url('empleados2')}}" class="btn btn-sm btn-danger float-end">Volver</a></h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{url('/update-empleado')}}" method="POST">
+                        <form action="{{url('update-empleado/'.$key)}}" method="POST">
                             @csrf
+                            @method('PUT')
         
                             <div class="form-group mb-3">
                                 <label>Nombre:</label>
@@ -47,7 +48,7 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
                             </div>
 
                         </form>
@@ -78,7 +79,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.title = "Crear usuario";
+            document.title = "Editar usuario";
 
             // Establece la fecha máxima en el campo de entrada
             const today = new Date().toISOString().split('T')[0];

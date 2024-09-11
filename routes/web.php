@@ -22,7 +22,8 @@ Route::post('/add-product', [ContactController::class, 'store']);
 Route::get('empleados2', [EmpleadosController::class, 'indexEmpleados']); //Ver listado
 Route::get('/add-empleado', [EmpleadosController::class, 'createEmpleado']); //vista agregar usuario
 Route::post('/add-empleado', [EmpleadosController::class, 'storeEmpleado']); //guardar
-Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']);
+Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']); //mostrar editar
+Route::put('update-empleado/{id}', [EmpleadosController::class, 'updateEmpleado']); //actualizar
 
 
 
