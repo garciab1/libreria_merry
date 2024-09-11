@@ -1,8 +1,5 @@
 <x-secciones-layout>
-
-    <h1 class="mb-4">Productos y Stock</h1>
-    
-    <div>
+        <div>
         
         <div class="py-3">
             @yield('content')
@@ -29,9 +26,6 @@
             });
         });
 
-        document.addEventListener("DOMContentLoaded", function() {
-                document.title = "Productos Stock";
-            });
     </script>
 
 </x-secciones-layout>

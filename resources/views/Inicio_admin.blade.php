@@ -1,7 +1,7 @@
 <x-MenuAdmin>
     <div class="text-center">
     <h1>
-        <br>LIBRERIA MERRY</h1>
+        <br><b>LIBRERÍA MERRY</b></h1>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <!-- Tarjeta 1 -->
@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/empleado.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="{{ route('Empleados') }}" class="btn btn-primary">Empleados</a>
+                        <a href="{{url('empleados2')}}" class="btn btn-primary">Empleados</a>
                     </div>
                 </div>
             </div>

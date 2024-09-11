@@ -17,6 +17,13 @@ Route::get('/productos', [ContactController::class, 'index']); //visualizar prod
 Route::get('/add-product', [ContactController::class, 'create']); //agregar producto
 Route::post('/add-product', [ContactController::class, 'store']);
 
+//Rutas para Empleados
+Route::get('empleados2', [ContactController::class, 'indexEmpleados']); //Ver listado
+Route::get('/add-empleado', [ContactController::class, 'createEmpleado']); //vista agregar usuario
+Route::post('/add-empleado', [ContactController::class, 'storeEmpleado']); //guardar
+
+
+
 
 
 

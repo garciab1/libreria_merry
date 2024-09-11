@@ -74,5 +74,37 @@ class ContactController extends Controller
             }
         }
     }
+
+
+
+    //CONTROLADORES DE EMPLEADOS/USUARIO
+    public function indexEmpleados(){
+        return view('firebase.contact.empleados');
+    }
+
+    public function createEmpleado(){
+        return view('Firebase.contact.agg_usuarioPROV');
+    }
+
+    public function storeEmpleado(Request $request){
+        $ref_tablename='usuarios';
+        $postData = [
+            'nombre_usuario' => strtoupper($request->nombre_usuario),
+            'apellido_usuario' => strtoupper($request->apellido_usuario),
+            'telefono' => $request->telefono,
+            'fechaNacimiento' => $request->fechaNacimiento,
+            'usuario' => $request->usuario,
+            'password' => $request->password,
+
+        ];
+        $postRef = $this->database->getReference($ref_tablename)->push($postData);
+        if($postRef){
+            return redirect('empleados2')->with('status', 'Usuario añadido exitosamente');
+        }
+        else{
+            return redirect('empleados2')->with('status', 'No se ha añadido el usuario');
+        }
+    }
+    
 }
 
