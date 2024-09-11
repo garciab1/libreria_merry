@@ -8,37 +8,55 @@
                         <h4>Añadir usuario <a href="{{url('empleados2')}}" class="btn btn-sm btn-danger float-end">Volver</a></h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{url('/add-empleado')}}" method="POST">
+                        <form id="userForm" action="{{url('/add-empleado')}}" method="POST">
                             @csrf
         
                             <div class="form-group mb-3">
                                 <label>Nombre:</label>
-                                <input type="text" name="nombre_usuario" class="form-control">
+                                <input type="text" name="nombre_usuario" class="form-control" required>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Apellido:</label>
-                                <input type="text" name="apellido_usuario" class="form-control">
+                                <input type="text" name="apellido_usuario" class="form-control" required>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Teléfono:</label>
-                                <input type="number" name="telefono" class="form-control">
+                                <input type="number" name="telefono" class="form-control" required>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Fecha de nacimiento:</label>
-                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento">
+                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Usuario:</label>
-                                <input type="text" name="usuario" class="form-control">
+                                <input type="text" name="usuario" class="form-control" required>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Contraseña:</label>
-                                <input type="text" name="password" class="form-control">
+                                <div class="input-group">
+                                    <input type="password" name="password" class="form-control" id="password" required>
+                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label>Confirmar Contraseña:</label>
+                                <div class="input-group">
+                                    <input type="password" name="password_confirmation" class="form-control" id="password2" required>
+                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div id="passwordError" class="text-danger" style="display: none;">
+                                    Las contraseñas no coinciden.
+                                </div>
                             </div>
 
                             <div class="form-group mb-3">
@@ -48,28 +66,9 @@
                         </form>
                     </div>
                 </div>
-                
-                
             </div>
-
         </div>
     </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -100,7 +99,7 @@
                 this.querySelector('i').classList.toggle('fa-eye-slash');
             });
 
-            document.getElementById('productForm').addEventListener('submit', function(event) {
+            document.getElementById('userForm').addEventListener('submit', function(event) {
                 if (password.value !== password2.value) {
                     event.preventDefault(); // Previene el envío del formulario
                     passwordError.style.display = 'block'; // Muestra el mensaje de error
