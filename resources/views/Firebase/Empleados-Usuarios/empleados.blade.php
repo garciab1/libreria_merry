@@ -44,7 +44,7 @@
                             <td>{{$item['password']}}</td>
                             <td>
                                 <!-- Botón de Editar -->
-                                <a href="" class="btn btn-warning btn-sm rounded-circle" title="Editar">
+                                <a href="{{url('edit-empleado/'.$key)}}" class="btn btn-warning btn-sm rounded-circle" title="Editar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 

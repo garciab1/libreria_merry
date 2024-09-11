@@ -27,7 +27,7 @@ class EmpleadosController extends Controller
     }
 
     public function createEmpleado(){
-        return view('Firebase.contact.agg_usuarioPROV');
+        return view('Firebase.Empleados-Usuarios.agg_usuarioPROV');
     }
 
     public function storeEmpleado(Request $request){
@@ -51,7 +51,16 @@ class EmpleadosController extends Controller
     }
 
     public function editEmpleado($id){
-        return view('Firebase.Empleados-Usuarios.edit_empleado');
+        $key = $id;
+        $editData = $this->database->getReference($this->tablename)->getChild($key)->getValue();
+        if($editData){
+            return view('Firebase.Empleados-Usuarios.edit_empleado', compact('editData'));
+        }
+        else{
+            return redirect('empleados2')->with('status', 'ID del Empleado no encontrado');
+        }
+        
+        
 
     }
     
