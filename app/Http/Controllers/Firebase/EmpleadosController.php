@@ -81,6 +81,17 @@ class EmpleadosController extends Controller
         }
 
     }
+
+    public function destroyEmpleado($id){
+        $key = $id;
+        $del_data = $this->database->getReference($this->tablename.'/'.$key)->remove();
+        if($del_data){
+            return redirect('empleados2')->with('status', 'Empleado eliminado exitosamente.');
+        }
+        else{
+            return redirect('empleados2')->with('status', 'Empleado no eliminado.');
+        }
+    }
     
 }
 

@@ -53,9 +53,11 @@
                                 <span style="margin: 0 5px;"></span>
         
                                 <!-- Botón de Eliminar -->
-                                <button class="btn btn-danger btn-sm rounded-circle" title="Eliminar">
+
+                                <a href="{{url('delete-empleado/'.$key)}}" class="btn btn-danger btn-sm rounded-circle" title="Eliminar">
                                     <i class="fas fa-trash"></i>
-                                </button>
+                                </a>
+                                
                             </td>
                                                          
                             

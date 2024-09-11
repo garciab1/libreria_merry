@@ -24,6 +24,8 @@ Route::get('/add-empleado', [EmpleadosController::class, 'createEmpleado']); //v
 Route::post('/add-empleado', [EmpleadosController::class, 'storeEmpleado']); //guardar
 Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']); //mostrar editar
 Route::put('update-empleado/{id}', [EmpleadosController::class, 'updateEmpleado']); //actualizar
+Route::get('delete-empleado/{id}', [EmpleadosController::class, 'destroyEmpleado']); //eliminar
+
 
 
 
