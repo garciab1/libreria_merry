@@ -11,6 +11,7 @@ use App\Http\Controllers\CrearUsuario_Controller;
 use App\Http\Controllers\Empleados_Controller;
 use App\Http\Controllers\HistorialVentas_Controller;
 use App\Http\Controllers\Firebase\ContactController;
+use App\Http\Controllers\Firebase\EmpleadosController;
 
 //Rutas creadas para uso de la base de datos
 Route::get('/productos', [ContactController::class, 'index']); //visualizar producto stock
@@ -18,9 +19,10 @@ Route::get('/add-product', [ContactController::class, 'create']); //agregar prod
 Route::post('/add-product', [ContactController::class, 'store']);
 
 //Rutas para Empleados
-Route::get('empleados2', [ContactController::class, 'indexEmpleados']); //Ver listado
-Route::get('/add-empleado', [ContactController::class, 'createEmpleado']); //vista agregar usuario
-Route::post('/add-empleado', [ContactController::class, 'storeEmpleado']); //guardar
+Route::get('empleados2', [EmpleadosController::class, 'indexEmpleados']); //Ver listado
+Route::get('/add-empleado', [EmpleadosController::class, 'createEmpleado']); //vista agregar usuario
+Route::post('/add-empleado', [EmpleadosController::class, 'storeEmpleado']); //guardar
+Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']);
 
 
 

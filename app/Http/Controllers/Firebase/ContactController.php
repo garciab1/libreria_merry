@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Firebase;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class ContactController extends Controller
 {
@@ -16,19 +17,19 @@ class ContactController extends Controller
     {
         $this->database = $database;
         $this->tablename = 'productos';
-        $this->tablenameUsuarios = 'usuarios';
+
         
     }
 
     public function index()
     {
         $productos = $this->database->getReference($this->tablename)->getValue();
-        return view('firebase.contact.producto_stock', compact('productos'));
+        return view('firebase.Contact.producto_stock', compact('productos'));
     }
 
     public function create()
     {
-        return view('firebase.contact.agg_producto');
+        return view('firebase.Contact.agg_producto');
     }
 
     public function store(Request $request)
@@ -79,36 +80,5 @@ class ContactController extends Controller
     }
 
 
-
-    //CONTROLADORES DE EMPLEADOS/USUARIO
-    public function indexEmpleados(){
-        $usuarios = $this->database->getReference($this->tablenameUsuarios)->getValue();
-        return view('firebase.contact.empleados', compact('usuarios'));
-    }
-
-    public function createEmpleado(){
-        return view('Firebase.contact.agg_usuarioPROV');
-    }
-
-    public function storeEmpleado(Request $request){
-        $ref_tablename='usuarios';
-        $postData = [
-            'nombre_usuario' => strtoupper($request->nombre_usuario),
-            'apellido_usuario' => strtoupper($request->apellido_usuario),
-            'telefono' => $request->telefono,
-            'fechaNacimiento' => $request->fechaNacimiento,
-            'usuario' => $request->usuario,
-            'password' => $request->password,
-
-        ];
-        $postRef = $this->database->getReference($ref_tablename)->push($postData);
-        if($postRef){
-            return redirect('empleados2')->with('status', 'Usuario añadido exitosamente');
-        }
-        else{
-            return redirect('empleados2')->with('status', 'No se ha añadido el usuario');
-        }
-    }
-    
 }
 

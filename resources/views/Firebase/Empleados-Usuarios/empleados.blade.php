@@ -25,8 +25,7 @@
                             <th>FECHA NACIMIENTO</th>
                             <th>USUARIO</th>
                             <th>CONTRASEÑA</th>
-                            <th>EDITAR</th>
-                            <th>ELIMINAR</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,9 +42,22 @@
                             <td>{{$item['fechaNacimiento']}}</td>
                             <td>{{$item['usuario']}}</td>
                             <td>{{$item['password']}}</td>
-                            <td><a href="" class="btn btn-sm btn-success">Editar</a></td>
-                            <td><a href="" class="btn btn-sm btn-danger">Eliminar</a></td>
-                            
+                            <td>
+                                <!-- Botón de Editar -->
+                                <a href="" class="btn btn-warning btn-sm rounded-circle" title="Editar">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                
+        
+                                <!-- Espacio entre botones -->
+                                <span style="margin: 0 5px;"></span>
+        
+                                <!-- Botón de Eliminar -->
+                                <button class="btn btn-danger btn-sm rounded-circle" title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                                                         
                             
                         </tr>
                         @empty
