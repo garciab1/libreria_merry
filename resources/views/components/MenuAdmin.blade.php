@@ -58,10 +58,10 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Nuevo Producto</a>
+                            <a href="/add-product" class="sidebar-link">Nuevo Producto</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="{{ route('ProductosStock') }}" class="sidebar-link">Productos y Stock</a>
+                            <a href="/productos" class="sidebar-link">Productos y Stock</a>
                         </li>
                     </ul>
                 </li>

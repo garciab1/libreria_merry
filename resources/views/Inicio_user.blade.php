@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/producto.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="/AgregarProducto" class="btn btn-primary">Nuevo producto</a>
+                        <a href="/add-product" class="btn btn-primary">Nuevo producto</a>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/stock.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="{{ route('ProductosStock') }}" class="btn btn-primary">Productos y stock</a>
+                        <a href="-/productos" class="btn btn-primary">Productos y stock</a>
                     </div>
                 </div>
             </div>
