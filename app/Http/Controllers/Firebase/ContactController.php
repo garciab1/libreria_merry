@@ -10,11 +10,14 @@ class ContactController extends Controller
 {
     protected $database;
     protected $tablename;
+    protected $tablenameUsuarios;
 
     public function __construct(Database $database)
     {
         $this->database = $database;
         $this->tablename = 'productos';
+        $this->tablenameUsuarios = 'usuarios';
+        
     }
 
     public function index()
@@ -79,7 +82,8 @@ class ContactController extends Controller
 
     //CONTROLADORES DE EMPLEADOS/USUARIO
     public function indexEmpleados(){
-        return view('firebase.contact.empleados');
+        $usuarios = $this->database->getReference($this->tablenameUsuarios)->getValue();
+        return view('firebase.contact.empleados', compact('usuarios'));
     }
 
     public function createEmpleado(){

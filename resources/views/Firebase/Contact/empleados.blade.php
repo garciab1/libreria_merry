@@ -18,6 +18,7 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>NOMBRE</th>
                             <TH>APELLIDO</TH>
                             <th>TELÉFONO</th>
@@ -29,26 +30,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @forelse ($productos as $key => $item) --}}
+                        @php
+                            $i=1;
+                        @endphp
+                        @forelse ($usuarios as $key => $item)
                             
                         <tr>
-                            {{-- <td>{{$item['nombre_producto']}}</td>
-                            <td>{{$item['precio_unitario']}}</td>
-                            <td>{{$item['stock']}}</td>
-                            <td>{{$item['proveedor']}}</td>
-                            <td>{{$item['categoria']}}</td>
-                            <td>{{$item['descripcion']}}</td> --}}
+                            <td>{{$i++}}</td>
+                            <td>{{$item['nombre_usuario']}}</td>
+                            <td>{{$item['apellido_usuario']}}</td>
+                            <td>{{$item['telefono']}}</td>
+                            <td>{{$item['fechaNacimiento']}}</td>
+                            <td>{{$item['usuario']}}</td>
+                            <td>{{$item['password']}}</td>
                             <td><a href="" class="btn btn-sm btn-success">Editar</a></td>
                             <td><a href="" class="btn btn-sm btn-danger">Eliminar</a></td>
                             
                             
                         </tr>
-                        {{-- @empty --}}
+                        @empty
                         <tr>
-                            <td colspan="8">No se encontraron empleados</td>
+                            <td colspan="9">No se encontraron empleados</td>
                         </tr>
 
-                        {{-- @endforelse --}}
+                        @endforelse
                     </tbody>
                 </table>
                 
