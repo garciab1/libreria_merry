@@ -22,6 +22,7 @@ class EmpleadosController extends Controller
 
     //CONTROLADORES DE EMPLEADOS/USUARIO
     public function indexEmpleados(){
+        
         $usuarios = $this->database->getReference($this->tablename)->getValue();
         return view('firebase.Empleados-Usuarios.empleados', compact('usuarios'));
     }
