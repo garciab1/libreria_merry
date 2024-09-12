@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Editar usuario 
+                        <h4>Editar Empleado 
                             <a href="{{url('empleados2')}}" class="btn btn-sm btn-danger float-end">Volver</a>
                         </h4>
                     </div>
