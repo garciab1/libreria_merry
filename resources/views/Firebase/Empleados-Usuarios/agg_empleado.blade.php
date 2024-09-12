@@ -8,32 +8,37 @@
                         <h4>Añadir usuario <a href="{{url('empleados2')}}" class="btn btn-sm btn-danger float-end">Volver</a></h4>
                     </div>
                     <div class="card-body">
-                        <form id="userForm" action="{{url('/add-empleado')}}" method="POST">
+                        <form id="userForm" class="needs-validation" action="{{url('/add-empleado')}}" method="POST" novalidate>
                             @csrf
         
                             <div class="form-group mb-3">
                                 <label>Nombre:</label>
                                 <input type="text" name="nombre_usuario" class="form-control" required>
+                                <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Apellido:</label>
                                 <input type="text" name="apellido_usuario" class="form-control" required>
+                                <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Teléfono:</label>
                                 <input type="number" name="telefono" class="form-control" required>
+                                <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Fecha de nacimiento:</label>
                                 <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                                <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
                             </div>
         
                             <div class="form-group mb-3">
                                 <label>Usuario:</label>
                                 <input type="text" name="usuario" class="form-control" required>
+                                <div class="invalid-feedback">Por favor, ingrese un nombre de usuario.</div>
                             </div>
         
                             <div class="form-group mb-3">
@@ -43,6 +48,7 @@
                                     <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                                         <i class="fa fa-eye"></i>
                                     </button>
+                                    <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
                                 </div>
                             </div>
 
@@ -53,6 +59,7 @@
                                     <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
                                         <i class="fa fa-eye"></i>
                                     </button>
+                                    <div class="invalid-feedback">Por favor, confirme su contraseña.</div>
                                 </div>
                                 <div id="passwordError" class="text-danger" style="display: none;">
                                     Las contraseñas no coinciden.
@@ -70,6 +77,8 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.title = "Crear usuario";
@@ -86,25 +95,57 @@
             const passwordError = document.getElementById('passwordError');
 
             togglePassword.addEventListener('click', function () {
-                // Alternar entre mostrar y ocultar la contraseña
                 const type = password.type === 'password' ? 'text' : 'password';
                 password.type = type;
                 this.querySelector('i').classList.toggle('fa-eye-slash');
             });
 
             togglePassword2.addEventListener('click', function () {
-                // Alternar entre mostrar y ocultar la contraseña
                 const type = password2.type === 'password' ? 'text' : 'password';
                 password2.type = type;
                 this.querySelector('i').classList.toggle('fa-eye-slash');
             });
 
             document.getElementById('userForm').addEventListener('submit', function(event) {
-                if (password.value !== password2.value) {
-                    event.preventDefault(); // Previene el envío del formulario
-                    passwordError.style.display = 'block'; // Muestra el mensaje de error
+                event.preventDefault();
+                event.stopPropagation();
+
+                // Verifica si el formulario es válido
+                if (this.checkValidity()) {
+                    if (password.value !== password2.value) {
+                        event.preventDefault();
+                        passwordError.style.display = 'block';
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Las contraseñas no coinciden.',
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        passwordError.style.display = 'none';
+
+                        // Si todo está correcto, mostrar SweetAlert de éxito
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Usuario agregado exitosamente',
+                            timer: 3000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            this.submit(); // Enviar el formulario si todo es válido
+                        });
+                    }
                 } else {
-                    passwordError.style.display = 'none'; // Oculta el mensaje de error
+                    this.classList.add('was-validated');
+                    
+                    // SweetAlert de error si faltan campos
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Error',
+                        text: 'Por favor, complete todos los campos obligatorios.',
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
                 }
             });
         });

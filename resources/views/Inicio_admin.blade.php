@@ -54,7 +54,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/empleado.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="{{url('empleados2')}}" class="btn btn-primary">Empleados</a>
+                        <a href="/empleados2" class="btn btn-primary">Empleados</a>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/usuario.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="{{ route('CrearUsuario')}}" class="btn btn-primary">Crear Usuario</a>
+                        <a href="/add-empleado" class="btn btn-primary">Crear Usuario</a>
                     </div>
                 </div>
             </div>

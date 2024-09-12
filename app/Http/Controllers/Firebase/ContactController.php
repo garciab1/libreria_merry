@@ -79,6 +79,50 @@ class ContactController extends Controller
         }
     }
 
+    public function editProducto($id){
+        $key = $id;
+        $editData = $this->database->getReference($this->tablename)->getChild($key)->getValue();
+        if($editData){
+            return view('Firebase.Contact.edit_producto', compact('editData', 'key'));
+        }
+        else{
+            return redirect('productos')->with('status', 'ID del Empleado no encontrado');
+        }
+    }
+
+    public function updateProducto(Request $request, $id){
+        $key = $id;
+        $updateData = [
+            'nombre_producto' => strtoupper($request->nombre_producto),
+            'precio_unitario' => $request->precio_unitario,
+            'stock' => $request->stock,
+            'proveedor' => strtoupper($request->proveedor),
+            'categoria' => strtoupper($request->categoria),
+            'descripcion' => strtoupper($request->descripcion),
+
+        ];
+        $res_updated = $this->database->getReference($this->tablename.'/'.$key)->update($updateData);
+        if($res_updated){
+            return redirect('productos')->with('status', 'Empleado actualizado exitosamente.');
+        }
+        else{
+            return redirect('productos')->with('status', 'Empleado no actualizado.');
+        }
+
+    }
+
+
+    public function destroyProducto($id){
+        $key = $id;
+        $del_data = $this->database->getReference($this->tablename.'/'.$key)->remove();
+        if($del_data){
+            return redirect('productos')->with('status', 'Producto eliminado exitosamente.');
+        }
+        else{
+            return redirect('productos')->with('status', 'Producto no eliminado.');
+        }
+    }
+
 
 }
 

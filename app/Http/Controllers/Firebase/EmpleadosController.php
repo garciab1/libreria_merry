@@ -25,9 +25,10 @@ class EmpleadosController extends Controller
         $usuarios = $this->database->getReference($this->tablename)->getValue();
         return view('firebase.Empleados-Usuarios.empleados', compact('usuarios'));
     }
+   
 
     public function createEmpleado(){
-        return view('Firebase.Empleados-Usuarios.agg_usuarioPROV');
+        return view('Firebase.Empleados-Usuarios.agg_empleado');
     }
 
     public function storeEmpleado(Request $request){
