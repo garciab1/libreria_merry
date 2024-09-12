@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Editar Empleado 
@@ -13,72 +13,106 @@
                         <form id="editUserForm" class="needs-validation" action="{{url('update-empleado/'.$key)}}" method="POST" novalidate>
                             @csrf
                             @method('PUT')
-        
-                            <div class="form-group mb-3">
-                                <label>Nombre:</label>
-                                <input type="text" name="nombre_usuario" class="form-control" value="{{$editData['nombre_usuario']}}" required>
-                                <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Apellido:</label>
-                                <input type="text" name="apellido_usuario" class="form-control" value="{{$editData['apellido_usuario']}}" required>
-                                <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Teléfono:</label>
-                                <input type="number" name="telefono" class="form-control" value="{{$editData['telefono']}}" required>
-                                <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Fecha de nacimiento:</label>
-                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value="{{$editData['fechaNacimiento']}}" required>
-                                <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Usuario:</label>
-                                <input type="text" name="usuario" class="form-control" value="{{$editData['usuario']}}" required>
-                                <div class="invalid-feedback">Por favor, ingrese un nombre de usuario.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Contraseña:</label>
-                                <div class="input-group">
-                                    <input type="password" name="password" class="form-control" id="password" value="{{$editData['password']}}" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
+    
+                            <!-- Modificación: Nombre y Apellido en la misma fila -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Nombre:</label>
+                                    <input type="text" name="nombre_usuario" class="form-control" value="{{$editData['nombre_usuario']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
                                 </div>
-                                <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label>Confirmar Contraseña:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password2" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                </div>
-                                <div id="passwordError" class="text-danger" style="display: none;">
-                                    Las contraseñas no coinciden.
+    
+                                <div class="col-md-6">
+                                    <label>Apellido:</label>
+                                    <input type="text" name="apellido_usuario" class="form-control" value="{{$editData['apellido_usuario']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
                                 </div>
                             </div>
-
+    
+                            <!-- Teléfono, Correo y Fecha de Nacimiento en la misma fila -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Teléfono:</label>
+                                    <input type="number" name="telefono" class="form-control" value="{{$editData['telefono']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
+                                </div>
+    
+                                
+    
+                                <div class="col-md-6">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value="{{$editData['fechaNacimiento']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
+                                </div>
+                            </div>
+    
+                            <hr>
+                            <h5>Datos de la cuenta</h5>
+    
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label>Usuario:</label>
+                                    <input type="text" name="usuario" class="form-control" value="{{$editData['usuario']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese un nombre de usuario.</div>
+                                </div>
+    
+                                <div class="col-md-4">
+                                    <label>Contraseña:</label>
+                                    <div class="input-group">
+                                        <input type="password" name="password" class="form-control" id="password" value="{{$editData['password']}}" required>
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+                                </div>
+    
+                                <div class="col-md-4">
+                                    <label>Confirmar Contraseña:</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password2" required>
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div id="passwordError" class="text-danger" style="display: none;">
+                                        Las contraseñas no coinciden.
+                                    </div>
+                                </div>
+                            </div>
+    
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label>Rol:</label>
+                                    <select name="rol" class="form-control" required>
+                                        
+                                        <!-- Opción Administrador -->
+                                        <option value="administrador" {{ strtolower($editData['rol']) == 'administrador' ? 'selected' : '' }}>
+                                            ADMINISTRADOR
+                                        </option>
+                                        <!-- Opción Empleado -->
+                                        <option value="empleado" {{ strtolower($editData['rol']) == 'empleado' ? 'selected' : '' }}>
+                                            EMPLEADO
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, seleccione un rol.</div>
+                                </div>
+                            </div>
+                            
+    
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-primary">Actualizar</button>
                             </div>
-
+    
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+     
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

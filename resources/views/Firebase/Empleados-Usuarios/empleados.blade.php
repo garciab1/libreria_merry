@@ -25,7 +25,8 @@
                             <th>FECHA NACIMIENTO</th>
                             <th>USUARIO</th>
                             <th>CONTRASEÑA</th>
-                            <th></th>
+                            <th>ROL</th>
+                            <th>OPCIONES</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,7 @@
                             <td>{{$item['fechaNacimiento']}}</td>
                             <td>{{$item['usuario']}}</td>
                             <td>{{$item['password']}}</td>
+                            <td>{{$item['rol']}}</td>
                             <td>
                                 <!-- Botón de Editar -->
                                 <a href="{{url('edit-empleado/'.$key)}}" class="btn btn-warning btn-sm rounded-circle" title="Editar">

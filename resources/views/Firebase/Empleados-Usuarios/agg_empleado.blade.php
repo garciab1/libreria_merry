@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h4>Añadir usuario <a href="{{url('empleados2')}}" class="btn btn-sm btn-danger float-end">Volver</a></h4>
@@ -10,65 +10,89 @@
                     <div class="card-body">
                         <form id="userForm" class="needs-validation" action="{{url('/add-empleado')}}" method="POST" novalidate>
                             @csrf
-        
-                            <div class="form-group mb-3">
-                                <label>Nombre:</label>
-                                <input type="text" name="nombre_usuario" class="form-control" required>
-                                <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Apellido:</label>
-                                <input type="text" name="apellido_usuario" class="form-control" required>
-                                <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Teléfono:</label>
-                                <input type="number" name="telefono" class="form-control" required>
-                                <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Fecha de nacimiento:</label>
-                                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
-                                <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Usuario:</label>
-                                <input type="text" name="usuario" class="form-control" required>
-                                <div class="invalid-feedback">Por favor, ingrese un nombre de usuario.</div>
-                            </div>
-        
-                            <div class="form-group mb-3">
-                                <label>Contraseña:</label>
-                                <div class="input-group">
-                                    <input type="password" name="password" class="form-control" id="password" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Nombre:</label>
+                                    <input type="text" name="nombre_usuario" class="form-control" required>
+                                    <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Apellido:</label>
+                                    <input type="text" name="apellido_usuario" class="form-control" required>
+                                    <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
                                 </div>
                             </div>
 
-                            <div class="form-group mb-3">
-                                <label>Confirmar Contraseña:</label>
-                                <div class="input-group">
-                                    <input type="password" name="password_confirmation" class="form-control" id="password2" required>
-                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                    <div class="invalid-feedback">Por favor, confirme su contraseña.</div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Teléfono:</label>
+                                    <input type="number" name="telefono" class="form-control" required>
+                                    <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
                                 </div>
-                                <div id="passwordError" class="text-danger" style="display: none;">
-                                    Las contraseñas no coinciden.
+
+                                <div class="col-md-6">
+                                    <label>Fecha de nacimiento:</label>
+                                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                                    <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
+                                </div>
+                            </div>
+
+
+                            <hr>
+                            <h5>Datos de la cuenta</h5>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label>Usuario:</label>
+                                    <input type="text" name="usuario" class="form-control" required>
+                                    <div class="invalid-feedback">Por favor, ingrese un nombre de usuario.</div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Contraseña:</label>
+                                    <div class="input-group">
+                                        <input type="password" name="password" class="form-control" id="password" required>
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Confirmar Contraseña:</label>
+                                    <div class="input-group">
+                                        <input type="password" name="password_confirmation" class="form-control" id="password2" required>
+                                        <button type="button" class="btn btn-outline-secondary" id="togglePassword2">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <div class="invalid-feedback">Por favor, confirme su contraseña.</div>
+                                    </div>
+                                    <div id="passwordError" class="text-danger" style="display: none;">
+                                        Las contraseñas no coinciden.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label>Rol:</label>
+                                    <select name="rol" class="form-control" required>
+                                        <option value="">SELECCIONE UN ROL</option>
+                                        <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                                        <option value="EMPLEADO">EMPLEADO</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, seleccione un rol.</div>
                                 </div>
                             </div>
 
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
+
+                            
 
                         </form>
                     </div>

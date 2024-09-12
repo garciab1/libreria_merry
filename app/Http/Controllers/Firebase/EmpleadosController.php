@@ -40,6 +40,7 @@ class EmpleadosController extends Controller
             'fechaNacimiento' => $request->fechaNacimiento,
             'usuario' => $request->usuario,
             'password' => $request->password,
+            'rol' => $request->rol,
 
         ];
         $postRef = $this->database->getReference($ref_tablename)->push($postData);
@@ -71,6 +72,7 @@ class EmpleadosController extends Controller
             'fechaNacimiento' => $request->fechaNacimiento,
             'usuario' => $request->usuario,
             'password' => $request->password,
+            'rol' => $request->rol,
 
         ];
         $res_updated = $this->database->getReference($this->tablename.'/'.$key)->update($updateData);

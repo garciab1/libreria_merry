@@ -24,8 +24,8 @@
                             <th>PROVEEDOR</th>
                             <th>CATEGORÍA</th>
                             <th>DESCRIPCIÓN</th>
-                            <th>EDITAR</th>
-                            <th>ELIMINAR</th>
+                            <th>OPCIONES</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -39,19 +39,24 @@
                             <td>{{$item['categoria']}}</td>
                             <td>{{$item['descripcion']}}</td>
                             <td>
-                                
-                                 <!-- Botón de Editar -->
-                                 <a href="{{url('edit-producto/'.$key)}}" class="btn btn-warning btn-sm rounded-circle" title="Editar">
+                                <!-- Botón de Editar -->
+                                <a href="{{url('edit-producto/'.$key)}}" class="btn btn-warning btn-sm rounded-circle" title="Editar">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
                                 
-                               
-                            <td> 
+        
+                                <!-- Espacio entre botones -->
+                                <span style="margin: 0 5px;"></span>
+        
+                                <!-- Botón de Eliminar -->
+
                                 <a href="{{url('delete-producto/'.$key)}}" class="btn btn-danger btn-sm rounded-circle" title="Eliminar">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                
                             </td>
                             
+
                             
                         </tr>
                         @empty
