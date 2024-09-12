@@ -26,6 +26,7 @@
                                 <th>APELLIDO</th>
                                 <th>TELÉFONO</th>
                                 <th>FECHA NACIMIENTO</th>
+                                <th>EMAIL</th>
                                 <th>USUARIO</th>
                                 <th>CONTRASEÑA</th>
                                 <th>ROL</th>
@@ -43,6 +44,7 @@
                                 <td>{{ $item['apellido_usuario'] }}</td>
                                 <td>{{ $item['telefono'] }}</td>
                                 <td>{{ $item['fechaNacimiento'] }}</td>
+                                <td>{{ $item['email'] }}</td>
                                 <td>{{ $item['usuario'] }}</td>
                                 <td>{{ $item['password'] }}</td>
                                 <td>{{ $item['rol'] }}</td>

@@ -50,6 +50,13 @@
                             <h5>Datos de la cuenta</h5>
     
                             <div class="row mb-3">
+
+                                <div class="col-md-4">
+                                    <label>Email:</label>
+                                    <input type="text" name="usuario" class="form-control" value="{{$editData['email']}}" required>
+                                    <div class="invalid-feedback">Por favor, ingrese su correo electronico.</div>
+                                </div>
+
                                 <div class="col-md-4">
                                     <label>Usuario:</label>
                                     <input type="text" name="usuario" class="form-control" value="{{$editData['usuario']}}" required>
