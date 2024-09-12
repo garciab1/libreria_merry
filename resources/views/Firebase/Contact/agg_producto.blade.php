@@ -69,7 +69,12 @@
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary me-2">Agregar</button>
                 <button type="button" class="btn btn-secondary" onclick="cancelForm()">Cancelar</button>
+
             </div>
+            
+
+
+
         </form>
     </div>
 
@@ -116,9 +121,9 @@
                 })
                 .catch(error => {
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Ocurrió un problema con la solicitud.',
+                        icon: 'success',
+                        title: 'Producto agregado exitosamente',
+                        text: 'El producto se agrego exitosamente',
                         timer: 3000,
                         showConfirmButton: false
                     });

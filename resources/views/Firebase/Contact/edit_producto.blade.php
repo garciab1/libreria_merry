@@ -71,7 +71,9 @@
             </div>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary me-2">Actualizar</button>
-                <a href="{{ url('productos') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ url('productos') }}" class="btn btn-secondary">Cancelar</a> 
+                <a href="{{ url('productos') }}" class="btn btn-sm btn-danger ">Volver</a> 
+            
             </div>
         </form>
     </div>
