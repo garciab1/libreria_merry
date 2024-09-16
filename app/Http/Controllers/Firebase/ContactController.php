@@ -103,10 +103,10 @@ class ContactController extends Controller
         ];
         $res_updated = $this->database->getReference($this->tablename.'/'.$key)->update($updateData);
         if($res_updated){
-            return redirect('productos')->with('status', 'Empleado actualizado exitosamente.');
+            return redirect('productos')->with('status', 'Producto actualizado exitosamente.');
         }
         else{
-            return redirect('productos')->with('status', 'Empleado no actualizado.');
+            return redirect('productos')->with('status', 'Producto no actualizado.');
         }
 
     }

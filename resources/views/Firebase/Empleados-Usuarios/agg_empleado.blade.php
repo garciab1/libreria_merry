@@ -51,6 +51,13 @@
                                 </div>
 
                                 <div class="col-md-4">
+                                    <label>Email:</label>
+                                    <input type="text" name="email" class="form-control" required>
+                                    <div class="invalid-feedback">Por favor, ingrese su correo electronico.</div>
+                                </div>
+
+
+                                <div class="col-md-4">
                                     <label>Contraseña:</label>
                                     <div class="input-group">
                                         <input type="password" name="password" class="form-control" id="password" required>
