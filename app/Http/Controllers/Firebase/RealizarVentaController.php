@@ -27,59 +27,57 @@ class RealizarVentaController extends Controller
 
     public function store(Request $request)
 {
-    // Validar los datos del formulario
+    // Validación de los campos del formulario
     $request->validate([
         'nombre_cliente' => 'required|string|max:255',
-        'fecha_venta' => 'required|date_format:Y-m-d\TH:i',  // Formato para datetime-local
-        'articulos' => 'required|json'  // Aseguramos que se envíen los artículos como JSON
+        'fecha_venta' => 'required|date_format:Y-m-d\TH:i', // Validar formato de fecha local
+        'articulos' => 'required|json'
     ]);
 
     // Decodificar los artículos del JSON
     $articulos = json_decode($request->input('articulos'), true);
     
-    // Verificar si la lista de artículos está vacía
     if (empty($articulos)) {
         return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
     }
 
-    // Calcular el total sumando los subtotales de cada artículo
-    $totalVenta = array_sum(array_column($articulos, 'subtotal'));
-
     // Preparar los datos de la venta
     $ventaData = [
-        'nombre_cliente' => strtoupper($request->input('nombre_cliente')),  // Convertir el nombre del cliente a mayúsculas
-        'fecha_venta' => $request->input('fecha_venta'),  // Fecha de la venta
-        'articulos' => $articulos,  // Listado de artículos
-        'total' => $totalVenta  // Total de la venta
+        'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
+        'fecha_venta' => $request->input('fecha_venta'),
+        'articulos' => $articulos,
+        'total' => array_sum(array_column($articulos, 'subtotal'))
     ];
 
-    // Enviar la venta a Firebase (usando la tabla de ventas)
+    // Registrar la venta en Firebase
     $ventaRef = $this->database->getReference($this->tablaVentas)->push($ventaData);
 
-    // Verificar si la venta fue guardada correctamente
     if ($ventaRef) {
-        // Actualizar el stock de los productos en Firebase
+        // Actualizar el stock de los productos
         foreach ($articulos as $articulo) {
             $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
             $producto = $productoRef->getValue();
 
-            // Si el producto existe, actualizar el stock
             if ($producto) {
+                // Calcular nuevo stock
                 $nuevoStock = $producto['stock'] - $articulo['cantidad'];
-                if ($nuevoStock < 0) $nuevoStock = 0;  // Evitar que el stock sea negativo
+
+                // Asegurar que el stock no quede en negativo
+                if ($nuevoStock < 0) $nuevoStock = 0;
 
                 // Actualizar el stock en Firebase
                 $productoRef->update(['stock' => $nuevoStock]);
             }
         }
 
-        // Redirigir con éxito
+        // Redirigir con mensaje de éxito
         return redirect()->route('RealizarVenta.index')->with('status', 'Venta realizada exitosamente.');
     } else {
-        // Redirigir con mensaje de error si no se guardó correctamente
+        // Redirigir con mensaje de error
         return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
     }
 }
+
 
 // Método para buscar artículos
 public function searchArticulo(Request $request)
