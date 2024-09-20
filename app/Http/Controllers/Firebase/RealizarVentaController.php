@@ -99,10 +99,23 @@ public function showVentas()
 {
     // Obtener todas las ventas desde Firebase
     $ventas = $this->database->getReference($this->tablaVentas)->getValue();
+    $productos = $this->database->getReference($this->tablaProductos)->getValue(); // Obtener los productos
 
     // Si no hay ventas, inicializa como un array vacío
     if (!$ventas) {
         $ventas = [];
+    }
+
+    // Añadir el nombre del producto en los artículos de cada venta
+    foreach ($ventas as &$venta) {
+        foreach ($venta['articulos'] as &$articulo) {
+            $codigoProducto = $articulo['codigo'];
+            if (isset($productos[$codigoProducto])) {
+                $articulo['nombre_producto'] = $productos[$codigoProducto]['nombre_producto'] ?? 'Producto desconocido';
+            } else {
+                $articulo['nombre_producto'] = 'Producto desconocido';
+            }
+        }
     }
 
     // Retornar la vista 'HistorialVentas' y pasar las ventas

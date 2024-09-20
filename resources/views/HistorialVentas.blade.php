@@ -38,13 +38,9 @@
                                         <ul>
                                             @foreach ($venta['articulos'] as $articulo)
                                             <li>
-                                                @if(isset($articulo['nombre_producto']))
-                                                    {{ $articulo['nombre_producto'] }} ({{ $articulo['cantidad'] }} x ${{ $articulo['precio'] }})
-                                                @else
-                                                    Producto desconocido ({{ $articulo['cantidad'] }} x ${{ $articulo['precio'] }})
-                                                @endif
+                                                {{ $articulo['nombre_producto'] ?? 'Producto desconocido' }} ({{ $articulo['cantidad'] }} x ${{ $articulo['precio'] }})
                                             </li>
-                                            @endforeach 
+                                         @endforeach
                                         </ul>
                                     </td>
                                     <td>${{ number_format($venta['total'], 2) }}</td>
