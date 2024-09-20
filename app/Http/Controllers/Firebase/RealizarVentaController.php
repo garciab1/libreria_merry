@@ -26,7 +26,7 @@ class RealizarVentaController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     // Validar los datos del formulario
     $request->validate([
         'nombre_cliente' => 'required|string|max:255',
