@@ -12,9 +12,13 @@ use App\Http\Controllers\Firebase\ContactController;
 use App\Http\Controllers\Firebase\EmpleadosController;
 use App\Http\Controllers\Firebase\RealizarVentaController;
 
+
+
+//Rutas creadas para uso de la base de datos para realizar venta
 Route::get('/realizarVentaAdmin', [RealizarVentaController::class, 'index'])->name('RealizarVenta.index');
 Route::post('/realizarVentaAdmin', [RealizarVentaController::class, 'store'])->name('RealizarVenta.store');
 Route::get('/realizarVentaAdmin-buscar', [RealizarVentaController::class, 'searchArticulo'])->name('RealizarVenta.buscarArticulo');
+Route::get('/historial-ventas', [RealizarVentaController::class, 'showVentas'])->name('HistorialVentas');
 
 
 
@@ -43,5 +47,5 @@ Route::get('/inicio_admin',[Inicioadmin_Controller::class,'inicio_admin'])->name
 Route::get('/inicio_user',[InicioUser_Controller::class,'inicio_user'])->name('IniUser');
 Route::get('/realizarVenta',[RealizarVenta_Controller::class,'realizarVenta'])->name('RealizarVenta');
 //Route::get('/realizarVentaAdmin',[RealizarVentaAdmin_Controller::class,'realizarVentaAdmin'])->name('RealizarVenta');
-Route::get('/HistorialVentas',[HistorialVentas_Controller::class,'HistorialVentas'])->name('HistorialVentas');
+//Route::get('/HistorialVentas',[HistorialVentas_Controller::class,'HistorialVentas'])->name('HistorialVentas');
 

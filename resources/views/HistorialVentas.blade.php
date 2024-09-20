@@ -1,130 +1,96 @@
-<x-secciones-layout>
+    @extends('Firebase.Contact.app')
 
-    <h1 class="mb-4">Historial de ventas</h1>
-
-    <div>
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th>FECHA</th>
-                    <th>CÓD. VENTA</th>
-                    <th>CLIENTE</th>
-                    <th>MONTO</th>
-                    <th>DETALLES</th>
-                </tr>
-            </thead>
-            <tbody id="modalListaFacturas">
-                <!-- Aquí se llenarán las facturas generadas -->
-                <!-- Registro 1 -->
-                <tr>
-                    <td>02/09/2024</td>
-                    <td>00012</td>
-                    <td>Juan Pérez</td>
-                    <td>$23.84</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i> 
-                        </button>
-                    </td>
-                </tr>
-                <!-- Registros adicionales -->
-                <tr>
-                    <td>01/09/2024</td>
-                    <td>00013</td>
-                    <td>María Gómez</td>
-                    <td>$50.00</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>31/08/2024</td>
-                    <td>00014</td>
-                    <td>Pedro Martínez</td>
-                    <td>$15.75</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>30/08/2024</td>
-                    <td>00015</td>
-                    <td>Ana López</td>
-                    <td>$60.20</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>29/08/2024</td>
-                    <td>00016</td>
-                    <td>Laura Fernández</td>
-                    <td>$45.10</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>28/08/2024</td>
-                    <td>00017</td>
-                    <td>Antonio Ruiz</td>
-                    <td>$27.90</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>27/08/2024</td>
-                    <td>00018</td>
-                    <td>Elena Romero</td>
-                    <td>$33.25</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>26/08/2024</td>
-                    <td>00019</td>
-                    <td>Jorge Castillo</td>
-                    <td>$78.60</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>25/08/2024</td>
-                    <td>00020</td>
-                    <td>Isabel Sánchez</td>
-                    <td>$90.00</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm rounded-circle">
-                            <i class="fas fa-file-invoice"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    @section('content')
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+    
+                @if(session('status'))
+                    <h4 class="alert alert-success mb-2">{{ session('status') }}</h4>
+                @endif
+    
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Historial de Ventas
+                            <input type="text" id="searchInput" class="form-control float-end ms-2" placeholder="Buscar ventas..." style="max-width: 250px;">
+                        </h4>
+                    </div>
+    
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID Venta</th>
+                                    <th>Nombre del Cliente</th>
+                                    <th>Fecha de la Venta</th>
+                                    <th>Artículos</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody">
+                                @forelse ($ventas as $key => $venta)
+                                <tr>
+                                    <td>{{ $key }}</td>
+                                    <td>{{ $venta['nombre_cliente'] }}</td>
+                                    <td>{{ $venta['fecha_venta'] }}</td>
+                                    <td>
+                                        <ul>
+                                            @foreach ($venta['articulos'] as $articulo)
+                                            <li>
+                                                @if(isset($articulo['nombre_producto']))
+                                                    {{ $articulo['nombre_producto'] }} ({{ $articulo['cantidad'] }} x ${{ $articulo['precio'] }})
+                                                @else
+                                                    Producto desconocido ({{ $articulo['cantidad'] }} x ${{ $articulo['precio'] }})
+                                                @endif
+                                            </li>
+                                            @endforeach 
+                                        </ul>
+                                    </td>
+                                    <td>${{ number_format($venta['total'], 2) }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5">No se encontraron ventas registradas.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
     </div>
-
+    
     <script>
-        
         document.addEventListener("DOMContentLoaded", function() {
-                document.title = "Historial";
+            document.title = "Historial de Ventas";
+    
+            const searchInput = document.getElementById('searchInput');
+            const salesTableBody = document.getElementById('salesTableBody');
+            const rows = salesTableBody.getElementsByTagName('tr');
+    
+            searchInput.addEventListener('keyup', function() {
+                const input = searchInput.value.toLowerCase();
+    
+                Array.from(rows).forEach(row => {
+                    const cells = row.getElementsByTagName('td');
+                    let match = false;
+    
+                    // Revisar cada celda excepto la última (total)
+                    for (let i = 0; i < cells.length - 1; i++) {
+                        const cell = cells[i];
+                        if (cell.textContent.toLowerCase().includes(input)) {
+                            match = true;
+                            break;
+                        }
+                    }
+    
+                    row.style.display = match ? '' : 'none';
+                });
             });
+        });
     </script>
-
-</x-secciones-layout>
+    
+    @endsection

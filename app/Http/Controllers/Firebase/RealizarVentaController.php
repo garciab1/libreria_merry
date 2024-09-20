@@ -94,4 +94,20 @@ public function searchArticulo(Request $request)
 
     return response()->json($productos);
 }
+
+public function showVentas()
+{
+    // Obtener todas las ventas desde Firebase
+    $ventas = $this->database->getReference($this->tablaVentas)->getValue();
+
+    // Si no hay ventas, inicializa como un array vacío
+    if (!$ventas) {
+        $ventas = [];
+    }
+
+    // Retornar la vista 'HistorialVentas' y pasar las ventas
+    return view('HistorialVentas', compact('ventas'));
+}
+
+
 }
