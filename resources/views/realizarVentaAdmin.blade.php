@@ -250,6 +250,57 @@
 
             document.getElementById('articulos').value = JSON.stringify(articulos);
         });
+
+
+        document.getElementById('formNuevaVenta').addEventListener('submit', function (e) {
+    e.preventDefault(); // Evita el envío del formulario para poder ver el JSON
+    
+    let articulos = [];
+    document.querySelectorAll('#lista_articulos tr').forEach(row => {
+        let codigo = row.querySelector('td:nth-child(1)').textContent;
+        let nombre = row.querySelector('td:nth-child(2)').textContent;
+        let stock = row.querySelector('td:nth-child(3)').textContent;
+        let precio = row.querySelector('td:nth-child(4)').textContent;
+        let cantidad = row.querySelector('.cantidadArticulo').value;
+        let subtotal = row.querySelector('.subtotal').textContent;
+
+        articulos.push({
+            codigo: codigo,
+            nombre: nombre,
+            stock: stock,
+            precio: parseFloat(precio),
+            cantidad: parseInt(cantidad),
+            subtotal: parseFloat(subtotal)
+        });
+    });
+
+    // Aquí imprimimos el JSON en la consola
+    console.log(JSON.stringify(articulos, null, 2));
+
+    document.getElementById('articulos').value = JSON.stringify(articulos);
+    
+    // Luego puedes enviar el formulario de forma manual si todo está bien
+    //this.submit();
+});
+
+window.onload = function() {
+        // Obtener la fecha y hora actual
+        const fechaActual = new Date();
+        
+        // Obtener los componentes de la fecha
+        const year = fechaActual.getFullYear();
+        const month = ('0' + (fechaActual.getMonth() + 1)).slice(-2); // Mes (añadir 0 si es necesario)
+        const day = ('0' + fechaActual.getDate()).slice(-2); // Día (añadir 0 si es necesario)
+        const hours = ('0' + fechaActual.getHours()).slice(-2); // Horas
+        const minutes = ('0' + fechaActual.getMinutes()).slice(-2); // Minutos
+
+        // Formatear la fecha en 'YYYY-MM-DDTHH:mm' para el campo datetime-local
+        const fechaFormateada = `${year}-${month}-${day}T${hours}:${minutes}`;
+        
+        // Asignar el valor al input con id="fecha_venta"
+        document.getElementById('fecha_venta').value = fechaFormateada;
+    }
+
     </script>
 </body>
 </x-secciones-layout>
