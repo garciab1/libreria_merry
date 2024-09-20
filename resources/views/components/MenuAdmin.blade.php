@@ -45,13 +45,13 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="{{route('RealizarVenta')}}" class="sidebar-link">
+                    <a href="/realizarVentaAdmin" class="sidebar-link">
                         <i class="lni lni-coin"></i>
                         <span>Realizar venta</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                    <a href="/productos" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
                         <i class="lni lni-ruler-pencil"></i>
                         <span>Productos</span>
