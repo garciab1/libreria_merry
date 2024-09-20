@@ -280,8 +280,9 @@
     document.getElementById('articulos').value = JSON.stringify(articulos);
     
     // Luego puedes enviar el formulario de forma manual si todo está bien
-    //this.submit();
+    this.submit();
 });
+
 
 window.onload = function() {
         // Obtener la fecha y hora actual
