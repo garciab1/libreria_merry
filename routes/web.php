@@ -12,6 +12,7 @@ use App\Http\Controllers\Firebase\EmpleadosController;
 use App\Http\Controllers\Firebase\RealizarVentaController;
 use App\Http\Controllers\Firebase\RealizarVentaUserController;
 
+Route::get('realizar-venta/imprimir/{ventaId}', [RealizarVentaController::class, 'imprimirComprobante'])->name('RealizarVenta.imprimirComprobante');
 
 
 //Rutas creadas para uso de la base de datos para realizar venta admin

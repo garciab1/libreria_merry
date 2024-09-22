@@ -30,13 +30,13 @@ class RealizarVentaController extends Controller
     // Validación de los campos del formulario
     $request->validate([
         'nombre_cliente' => 'required|string|max:255',
-        'fecha_venta' => 'required|date_format:Y-m-d\TH:i', // Validar formato de fecha local
+        'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
         'articulos' => 'required|json'
     ]);
 
     // Decodificar los artículos del JSON
     $articulos = json_decode($request->input('articulos'), true);
-    
+
     if (empty($articulos)) {
         return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
     }
@@ -59,7 +59,6 @@ class RealizarVentaController extends Controller
             $producto = $productoRef->getValue();
 
             if ($producto) {
-                // Calcular nuevo stock
                 $nuevoStock = $producto['stock'] - $articulo['cantidad'];
 
                 // Asegurar que el stock no quede en negativo
@@ -70,57 +69,73 @@ class RealizarVentaController extends Controller
             }
         }
 
-        // Redirigir con mensaje de éxito
-        return redirect()->route('RealizarVenta.index')->with('status', 'Venta realizada exitosamente.');
+        // Redirigir a la vista del comprobante
+        return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
     } else {
-        // Redirigir con mensaje de error
         return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
     }
 }
 
 
-// Método para buscar artículos
-public function searchArticulo(Request $request)
-{
-    $query = $request->query('query', ''); // Obtén la consulta de búsqueda o una cadena vacía
-    $productos = $this->database->getReference($this->tablaProductos)->getValue();
 
-    // Si hay una consulta de búsqueda, filtra los productos
-    if ($query) {
-        $productos = array_filter($productos, function ($producto) use ($query) {
-            return stripos($producto['nombre_producto'], $query) !== false;
-        });
+    // Método para buscar artículos
+    public function searchArticulo(Request $request)
+    {
+        $query = $request->query('query', ''); // Obtén la consulta de búsqueda o una cadena vacía
+        $productos = $this->database->getReference($this->tablaProductos)->getValue();
+
+        // Si hay una consulta de búsqueda, filtra los productos
+        if ($query) {
+            $productos = array_filter($productos, function ($producto) use ($query) {
+                return stripos($producto['nombre_producto'], $query) !== false;
+            });
+        }
+
+        return response()->json($productos);
     }
 
-    return response()->json($productos);
-}
+    public function showVentas()
+    {
+        $ventas = $this->database->getReference($this->tablaVentas)->getValue();
+        $productos = $this->database->getReference($this->tablaProductos)->getValue();
 
-public function showVentas()
-{
-    // Obtener todas las ventas desde Firebase
-    $ventas = $this->database->getReference($this->tablaVentas)->getValue();
-    $productos = $this->database->getReference($this->tablaProductos)->getValue(); // Obtener los productos
+        if (!$ventas) {
+            $ventas = [];
+        }
 
-    // Si no hay ventas, inicializa como un array vacío
-    if (!$ventas) {
-        $ventas = [];
-    }
-
-    // Añadir el nombre del producto en los artículos de cada venta
-    foreach ($ventas as &$venta) {
-        foreach ($venta['articulos'] as &$articulo) {
-            $codigoProducto = $articulo['codigo'];
-            if (isset($productos[$codigoProducto])) {
-                $articulo['nombre_producto'] = $productos[$codigoProducto]['nombre_producto'] ?? 'Producto desconocido';
-            } else {
-                $articulo['nombre_producto'] = 'Producto desconocido';
+        foreach ($ventas as &$venta) {
+            foreach ($venta['articulos'] as &$articulo) {
+                $codigoProducto = $articulo['codigo'];
+                if (isset($productos[$codigoProducto]) && isset($productos[$codigoProducto]['nombre_producto'])) {
+                    $articulo['nombre_producto'] = $productos[$codigoProducto]['nombre_producto'];
+                } else {
+                    $articulo['nombre_producto'] = 'Producto desconocido';
+                }
             }
         }
+
+        return view('HistorialVentas', compact('ventas'));
     }
 
-    // Retornar la vista 'HistorialVentas' y pasar las ventas
-    return view('HistorialVentas', compact('ventas'));
-}
+    public function imprimirComprobante($ventaId)
+    {
+        // Obtener la venta específica desde Firebase
+        $venta = $this->database->getReference($this->tablaVentas . '/' . $ventaId)->getValue();
+    
+        if (!$venta) {
+            return redirect()->route('RealizarVenta.index')->with('status', 'Venta no encontrada.');
+        }
+    
+        // Asegúrate de que cada artículo tenga el nombre del producto
+        foreach ($venta['articulos'] as &$articulo) {
+            $codigoProducto = $articulo['codigo'];
+            $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();
+            $articulo['nombre_producto'] = $producto['nombre_producto'] ?? 'Producto desconocido';
+        }
+    
+        return view('comprobanteVenta', compact('venta'));
+    }
+    
 
 
 }
