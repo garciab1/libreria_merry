@@ -26,55 +26,55 @@ class RealizarVentaController extends Controller
     }
 
     public function store(Request $request)
-{
-    // Validación de los campos del formulario
-    $request->validate([
-        'nombre_cliente' => 'required|string|max:255',
-        'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
-        'articulos' => 'required|json'
-    ]);
+    {
+        // Validación de los campos del formulario
+        $request->validate([
+            'nombre_cliente' => 'required|string|max:255',
+            'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
+            'articulos' => 'required|json'
+        ]);
 
-    // Decodificar los artículos del JSON
-    $articulos = json_decode($request->input('articulos'), true);
+        // Decodificar los artículos del JSON
+        $articulos = json_decode($request->input('articulos'), true);
 
-    if (empty($articulos)) {
-        return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
-    }
-
-    // Preparar los datos de la venta
-    $ventaData = [
-        'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
-        'fecha_venta' => $request->input('fecha_venta'),
-        'articulos' => $articulos,
-        'total' => array_sum(array_column($articulos, 'subtotal'))
-    ];
-
-    // Registrar la venta en Firebase
-    $ventaRef = $this->database->getReference($this->tablaVentas)->push($ventaData);
-
-    if ($ventaRef) {
-        // Actualizar el stock de los productos
-        foreach ($articulos as $articulo) {
-            $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
-            $producto = $productoRef->getValue();
-
-            if ($producto) {
-                $nuevoStock = $producto['stock'] - $articulo['cantidad'];
-
-                // Asegurar que el stock no quede en negativo
-                if ($nuevoStock < 0) $nuevoStock = 0;
-
-                // Actualizar el stock en Firebase
-                $productoRef->update(['stock' => $nuevoStock]);
-            }
+        if (empty($articulos)) {
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
         }
 
-        // Redirigir a la vista del comprobante
-        return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
-    } else {
-        return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
+        // Preparar los datos de la venta
+        $ventaData = [
+            'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
+            'fecha_venta' => $request->input('fecha_venta'),
+            'articulos' => $articulos,
+            'total' => array_sum(array_column($articulos, 'subtotal'))
+        ];
+
+        // Registrar la venta en Firebase
+        $ventaRef = $this->database->getReference($this->tablaVentas)->push($ventaData);
+
+        if ($ventaRef) {
+            // Actualizar el stock de los productos
+            foreach ($articulos as $articulo) {
+                $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
+                $producto = $productoRef->getValue();
+
+                if ($producto) {
+                    $nuevoStock = $producto['stock'] - $articulo['cantidad'];
+
+                    // Asegurar que el stock no quede en negativo
+                    if ($nuevoStock < 0) $nuevoStock = 0;
+
+                    // Actualizar el stock en Firebase
+                    $productoRef->update(['stock' => $nuevoStock]);
+                }
+            }
+
+            // Redirigir a la vista del comprobante
+            return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
+        } else {
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
+        }
     }
-}
 
 
 

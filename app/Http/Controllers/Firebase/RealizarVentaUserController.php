@@ -29,15 +29,15 @@ class RealizarVentaUserController extends Controller
         // Validación de los campos del formulario
         $request->validate([
             'nombre_cliente' => 'required|string|max:255',
-            'fecha_venta' => 'required|date_format:Y-m-d\TH:i', // Validar formato de fecha local
+            'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
             'articulos' => 'required|json'
         ]);
 
         // Decodificar los artículos del JSON
         $articulos = json_decode($request->input('articulos'), true);
-        
+
         if (empty($articulos)) {
-            return redirect()->route('RealizarVentaUser.index')->with('status', 'No se han agregado artículos a la venta.');
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
         }
 
         // Preparar los datos de la venta
@@ -58,7 +58,6 @@ class RealizarVentaUserController extends Controller
                 $producto = $productoRef->getValue();
 
                 if ($producto) {
-                    // Calcular nuevo stock
                     $nuevoStock = $producto['stock'] - $articulo['cantidad'];
 
                     // Asegurar que el stock no quede en negativo
@@ -69,13 +68,13 @@ class RealizarVentaUserController extends Controller
                 }
             }
 
-            // Redirigir con mensaje de éxito
-            return redirect()->route('RealizarVentaUser.index')->with('status', 'Venta realizada exitosamente.');
+            // Redirigir a la vista del comprobante
+            return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
         } else {
-            // Redirigir con mensaje de error
-            return redirect()->route('RealizarVentaUser.index')->with('status', 'No se pudo realizar la venta.');
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
         }
     }
+
 
 
     // Método para buscar artículos
@@ -94,6 +93,29 @@ class RealizarVentaUserController extends Controller
         return response()->json($productos);
     }
 
+    public function imprimirComprobante($ventaId)
+    {
+        // Obtener la venta específica desde Firebase
+        $venta = $this->database->getReference($this->tablaVentas . '/' . $ventaId)->getValue();
+    
+        if (!$venta) {
+            return redirect()->route('RealizarVenta.index')->with('status', 'Venta no encontrada.');
+        }
+    
+        // Asegúrate de que cada artículo tenga el nombre del producto
+        foreach ($venta['articulos'] as &$articulo) {
+            $codigoProducto = $articulo['codigo'];
+            $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();
+            $articulo['nombre_producto'] = $producto['nombre_producto'] ?? 'Producto desconocido';
+        }
+    
+        return view('comprobanteVenta', compact('venta'));
+    }
+    
 
 
 }
+
+
+
+
