@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Empleados 
-                        <a href="{{url('add-empleado')}}" class="btn btn-sm btn-primary float-end">Añadir Empleado</a>
+                       
                         <input type="text" id="searchInput" class="form-control float-end ms-2" placeholder="Buscar..." style="max-width: 250px; margin-right: 15px;">
                     </h4>
                 </div>
@@ -22,12 +22,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>APELLIDO</th>
-                                <th>TELÉFONO</th>
-                                <th>FECHA NACIMIENTO</th>
+                                <th>NOMBRE</th>                              
                                 <th>EMAIL</th>
-                                <th>USUARIO</th>
                                 <th>CONTRASEÑA</th>
                                 <th>ROL</th>
                                 <th>OPCIONES</th>
@@ -37,15 +33,11 @@
                             @php
                                 $i = 1;
                             @endphp
-                            @forelse ($usuarios as $key => $item)
+                            @forelse ($users as $key => $item)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $item['nombre_usuario'] }}</td>
-                                <td>{{ $item['apellido_usuario'] }}</td>
-                                <td>{{ $item['telefono'] }}</td>
-                                <td>{{ $item['fechaNacimiento'] }}</td>
+                                <td>{{ $item['name'] }}</td>
                                 <td>{{ $item['email'] }}</td>
-                                <td>{{ $item['usuario'] }}</td>
                                 <td>{{ $item['password'] }}</td>
                                 <td>{{ $item['rol'] }}</td>
                                 <td>

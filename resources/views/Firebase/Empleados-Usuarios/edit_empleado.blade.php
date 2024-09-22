@@ -18,34 +18,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Nombre:</label>
-                                    <input type="text" name="nombre_usuario" class="form-control" value="{{$editData['nombre_usuario']}}" required>
+                                    <input type="text" name="nombre_usuario" class="form-control" value="{{['name']}}" required>
                                     <div class="invalid-feedback">Por favor, ingrese el nombre.</div>
                                 </div>
     
-                                <div class="col-md-6">
-                                    <label>Apellido:</label>
-                                    <input type="text" name="apellido_usuario" class="form-control" value="{{$editData['apellido_usuario']}}" required>
-                                    <div class="invalid-feedback">Por favor, ingrese el apellido.</div>
-                                </div>
                             </div>
     
                             <!-- Teléfono, Correo y Fecha de Nacimiento en la misma fila -->
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Teléfono:</label>
-                                    <input type="number" name="telefono" class="form-control" value="{{$editData['telefono']}}" required>
-                                    <div class="invalid-feedback">Por favor, ingrese un teléfono válido.</div>
-                                </div>
-    
-                                
-    
-                                <div class="col-md-6">
-                                    <label>Fecha de nacimiento:</label>
-                                    <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value="{{$editData['fechaNacimiento']}}" required>
-                                    <div class="invalid-feedback">Por favor, ingrese una fecha de nacimiento.</div>
-                                </div>
-                            </div>
-    
+                         
                             <hr>
                             <h5>Datos de la cuenta</h5>
     

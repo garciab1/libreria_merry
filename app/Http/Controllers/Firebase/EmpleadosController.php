@@ -16,15 +16,14 @@ class EmpleadosController extends Controller
     public function __construct(Database $database)
     {
         $this->database = $database;
-        $this->tablename = 'usuarios';
+        $this->tablename = 'users';
         
     }
 
     //CONTROLADORES DE EMPLEADOS/USUARIO
     public function indexEmpleados(){
-        
-        $usuarios = $this->database->getReference($this->tablename)->getValue();
-        return view('firebase.Empleados-Usuarios.empleados', compact('usuarios'));
+        $users = $this->database->getReference($this->tablename)->getValue();
+        return view('firebase.Empleados-Usuarios.empleados', compact('users'));
     }
    
 
@@ -33,14 +32,10 @@ class EmpleadosController extends Controller
     }
 
     public function storeEmpleado(Request $request){
-        $ref_tablename='usuarios';
+        $ref_tablename='users';
         $postData = [
-            'nombre_usuario' => strtoupper($request->nombre_usuario),
-            'apellido_usuario' => strtoupper($request->apellido_usuario),
-            'telefono' => $request->telefono,
-            'fechaNacimiento' => $request->fechaNacimiento,
+            'name' => strtoupper($request->name),
             'email' => $request -> email,
-            'usuario' => $request->usuario,
             'password' => $request->password,
             'rol' => $request->rol,
 
@@ -68,12 +63,9 @@ class EmpleadosController extends Controller
     public function updateEmpleado(Request $request, $id){
         $key = $id;
         $updateData = [
-            'nombre_usuario' => strtoupper($request->nombre_usuario),
-            'apellido_usuario' => strtoupper($request->apellido_usuario),
+            'name' => strtoupper($request->name),
             'telefono' => $request->telefono,
-            'fechaNacimiento' => $request->fechaNacimiento,
             'email' => $request -> email,
-            'usuario' => $request->usuario,
             'password' => $request->password,
             'rol' => $request->rol,
 
