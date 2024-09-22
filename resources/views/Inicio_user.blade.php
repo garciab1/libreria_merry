@@ -1,8 +1,7 @@
 <x-MenuUser>
     <div class="text-center">
     <h1>
-        <br>LIBRERIA MERRY</h1>
-        <br><br>
+        <br><b>LIBRERÍA MERRY</b></h1>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <!-- Tarjeta 1 -->
@@ -11,7 +10,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/venta.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="/realizarVenta" class="btn btn-primary">Realizar venta</a>
+                        <a href="/realizarVentaUser" class="btn btn-primary">Realizar venta</a>
                     </div>
                 </div>
             </div>
@@ -22,7 +21,7 @@
                     <div class="card-body">
                         <img src="{{ asset('images/producto.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="/add-product" class="btn btn-primary">Nuevo producto</a>
+                        <a href="/add-productUser" class="btn btn-primary">Nuevo producto</a>
                     </div>
                 </div>
             </div>
@@ -33,12 +32,13 @@
                     <div class="card-body">
                         <img src="{{ asset('images/stock.png') }}" alt="Descripción de la imagen" width="100">
                         <br><br>
-                        <a href="-/productos" class="btn btn-primary">Productos y stock</a>
+                        <a href="/productosUser" class="btn btn-primary">Productos y stock</a>
                     </div>
                 </div>
             </div>
     
-   
+            
+    
         </div>
     </div>
     </div>
