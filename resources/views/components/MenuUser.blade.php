@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="/realizarVentaAdmin" class="sidebar-link">
+                    <a href="/realizarVentaUser" class="sidebar-link">
                         <i class="lni lni-coin"></i>
                         <span>Realizar venta</span>
                     </a>
@@ -59,10 +59,10 @@
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="/add-product" class="sidebar-link">Nuevo Producto</a>
+                            <a href="/add-productUser" class="sidebar-link">Nuevo Producto</a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="/productos" class="sidebar-link">Productos y Stock</a>
+                            <a href="/productosUser" class="sidebar-link">Productos y Stock</a>
                         </li>
                     </ul>
                 </li>

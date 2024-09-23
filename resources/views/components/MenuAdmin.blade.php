@@ -78,12 +78,7 @@
                         <span>Empleados</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/add-empleado" class="sidebar-link">
-                        <i class="lni lni-users"></i>
-                        <span>Administrar Empleados</span>
-                    </a>
-                </li>
+               
             </ul>
             <div class="sidebar-footer">
                 <a href="/" class="sidebar-link">

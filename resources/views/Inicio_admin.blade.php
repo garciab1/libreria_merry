@@ -58,17 +58,7 @@
                     </div>
                 </div>
             </div>
-    
-            <!-- Tarjeta 6 -->
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <img src="{{ asset('images/usuario.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="/add-empleado" class="btn btn-primary">Crear Usuario</a>
-                    </div>
-                </div>
-            </div>
+              
         </div>
     </div>
     </div>

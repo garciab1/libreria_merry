@@ -62,23 +62,21 @@ class EmpleadosController extends Controller
 
     public function updateEmpleado(Request $request, $id){
         $key = $id;
+    
+        // Solo actualizamos el rol
         $updateData = [
-            'name' => strtoupper($request->name),
-            'telefono' => $request->telefono,
-            'email' => $request -> email,
-            'password' => $request->password,
             'rol' => $request->rol,
-
         ];
+    
         $res_updated = $this->database->getReference($this->tablename.'/'.$key)->update($updateData);
         if($res_updated){
-            return redirect('empleados2')->with('status', 'Empleado actualizado exitosamente.');
+            return redirect('empleados2')->with('status', 'Rol actualizado exitosamente.');
         }
         else{
-            return redirect('empleados2')->with('status', 'Empleado no actualizado.');
+            return redirect('empleados2')->with('status', 'Rol no actualizado.');
         }
-
     }
+    
 
     public function destroyEmpleado($id){
         $key = $id;

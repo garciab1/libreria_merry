@@ -71,7 +71,7 @@ class RealizarVentaUserController extends Controller
             // Redirigir a la vista del comprobante
             return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
         } else {
-            return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
+            return redirect()->route('RealizarVentaUser.index')->with('status', 'No se pudo realizar la venta.');
         }
     }
 
@@ -99,7 +99,7 @@ class RealizarVentaUserController extends Controller
         $venta = $this->database->getReference($this->tablaVentas . '/' . $ventaId)->getValue();
     
         if (!$venta) {
-            return redirect()->route('RealizarVenta.index')->with('status', 'Venta no encontrada.');
+            return redirect()->route('RealizarVentaUser.index')->with('status', 'Venta no encontrada.');
         }
     
         // Asegúrate de que cada artículo tenga el nombre del producto
