@@ -16,6 +16,7 @@ class CheckRole
      * @param  string  $role
      * @return mixed
      */
+
     public function handle(Request $request, Closure $next, $role)
     {
         // Verificar si el usuario está autenticado
@@ -23,10 +24,9 @@ class CheckRole
             return redirect('/login'); // Redirigir al login si no está autenticado
         }
 
-        // Obtener el rol del usuario desde Firebase
         $user = Auth::user();
         // Aquí se obtiene el rol del usuario desde Firebase
-        $userRole = $this->getUserRoleFromFirebase($user->email); // Cambia esto según tu lógica
+        $userRole = $this->getUserRoleFromFirebase($user->email); 
 
         // Verificar si el rol del usuario coincide
         if ($userRole !== $role) {
@@ -39,10 +39,9 @@ class CheckRole
     // Método para obtener el rol del usuario desde Firebase
     private function getUserRoleFromFirebase($email)
     {
-        // Aquí debe ir tu lógica para obtener el rol desde Firebase
-        // Puedes usar cURL o file_get_contents según tu implementación previa
+        
 
-        // Suponiendo que ya tienes la lógica para obtener el rol:
+        // Obtener el rol:
         $firebaseUrl = 'https://sis-merry-default-rtdb.firebaseio.com/users.json';
         $usersInFirebase = file_get_contents($firebaseUrl);
         $usersData = json_decode($usersInFirebase, true);

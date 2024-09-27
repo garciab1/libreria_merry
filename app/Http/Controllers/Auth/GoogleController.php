@@ -14,50 +14,50 @@ class GoogleController extends Controller
     }
 
     public function handleGoogleCallback()
-{
-    try {
-        $user = Socialite::driver('google')->user();
-        $findUser = User::where('email', $user->getEmail())->first();
+    {
+        try {
+            $user = Socialite::driver('google')->user();
+            $findUser = User::where('email', $user->getEmail())->first();
 
-        if (!$findUser) {
-            $plainPassword = uniqid(); // Generar una contraseña única
+            if (!$findUser) {
+                $plainPassword = uniqid(); // Generar una contraseña única
 
-            $newUser = User::create([
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'google_id' => $user->getId(),
-                'password' => $plainPassword,
+                $newUser = User::create([
+                    'name' => $user->getName(),
+                    'email' => $user->getEmail(),
+                    'google_id' => $user->getId(),
+                    'password' => $plainPassword,
+                ]);
+
+                Auth::login($newUser);
+            } else {
+                Auth::login($findUser);
+            }
+
+            // Verificar si el usuario ya está en Firebase antes de guardarlo
+            $this->checkAndSaveUserToFirebase($user, $user->getAvatar());
+
+            // Recuperar el usuario de Firebase para obtener los detalles
+            $firebaseUser = $this->getUserFromFirebase($user->getEmail());
+
+            // Guardar datos en la sesión
+            session([
+                'user_name' => $firebaseUser['name'],
+                'user_avatar' => $firebaseUser['avatar'],
+                'user_role' => $firebaseUser['rol'],
             ]);
 
-            Auth::login($newUser);
-        } else {
-            Auth::login($findUser);
+            // Redirigir según el rol del usuario
+            if ($firebaseUser['rol'] === 'admin') {
+                return redirect()->route('IniAdmin');
+            } else {
+                return redirect()->route('IniUser');
+            }
+
+        } catch (\Exception $e) {
+            return redirect('/login')->withErrors(['error' => $e->getMessage()]);
         }
-
-        // Verificar si el usuario ya está en Firebase antes de guardarlo
-        $this->checkAndSaveUserToFirebase($user, $user->getAvatar());
-
-        // Recuperar el usuario de Firebase para obtener los detalles
-        $firebaseUser = $this->getUserFromFirebase($user->getEmail());
-
-        // Guardar datos del usuario en la sesión
-        session([
-            'user_name' => $firebaseUser['name'],
-            'user_avatar' => $firebaseUser['avatar'],
-            'user_role' => $firebaseUser['rol'],
-        ]);
-
-        // Redirigir según el rol del usuario
-        if ($firebaseUser['rol'] === 'admin') {
-            return redirect()->route('IniAdmin');
-        } else {
-            return redirect()->route('IniUser');
-        }
-
-    } catch (\Exception $e) {
-        return redirect('/login')->withErrors(['error' => $e->getMessage()]);
     }
-}
 
 
     private function checkAndSaveUserToFirebase($user, $avatar)
