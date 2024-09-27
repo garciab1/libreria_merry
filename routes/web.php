@@ -13,11 +13,9 @@ use App\Http\Controllers\Firebase\RealizarVentaController;
 use App\Http\Controllers\Firebase\RealizarVentaUserController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\auth\GoogleController;
+
+//Ruta de impresion
 Route::get('realizar-venta/imprimir/{ventaId}', [RealizarVentaController::class, 'imprimirComprobante'])->name('RealizarVenta.imprimirComprobante');
-
-
-
-
 
 //Rutas creadas para uso de la base de datos para realizar venta admin
 Route::get('/realizarVentaAdmin', [RealizarVentaController::class, 'index'])->name('RealizarVenta.index');
@@ -29,7 +27,6 @@ Route::get('/historial-ventas', [RealizarVentaController::class, 'showVentas'])-
 Route::get('/realizarVentaUser', [RealizarVentaUserController::class, 'indexRuser'])->name('RealizarVentaUser.index');
 Route::post('/realizarVentaUser', [RealizarVentaUserController::class, 'storeRuser'])->name('RealizarVentaUser.store');
 Route::get('/realizarVentaUser-buscar', [RealizarVentaUserController::class, 'searchArticuloRuser'])->name('RealizarVentaUser.buscarArticulo');
-
 
 //Rutas creadas para uso de la base de datos 
 Route::get('/productos', [ContactController::class, 'index']); //visualizar producto stock
@@ -71,9 +68,5 @@ Route::middleware([CheckRole::class.':user'])->group(function () {
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('auth/callback/google', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/testfire', [GoogleController::class, 'testFirebaseConnection']);
-
-//Route::get('/inicio_admin',[Inicioadmin_Controller::class,'inicio_admin'])->name('IniAdmin');
-//Route::get('/inicio_user',[InicioUser_Controller::class,'inicio_user'])->name('IniUser');
-Route::get('/realizarVenta',[RealizarVenta_Controller::class,'realizarVenta'])->name('RealizarVenta');
 
 

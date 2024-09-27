@@ -14,6 +14,13 @@ a {
 li {
     list-style: none;
 }
+.icono {
+    font-size: 25px !important; 
+    width: 30px;     /* Establece el ancho del ícono */
+    height: 30px;    /* Establece la altura del ícono */
+    display: inline-block; /* Asegura que se comporte como un bloque en línea */
+    vertical-align: middle; /* Alinea verticalmente el ícono con el texto */
+}
 
 h1 {
     font-weight: 600;

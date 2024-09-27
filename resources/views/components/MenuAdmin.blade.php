@@ -40,20 +40,21 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Perfil</span>
+                        <img src="{{ session('user_avatar') }}" alt="Avatar" style="width: 25px; height: 25px; border-radius: 50%;">
+                        <i></i>
+                        <span>{{ session('user_name') }}</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="/realizarVentaAdmin" class="sidebar-link">
-                        <i class="lni lni-coin"></i>
+                        <i class="lni lni-coin icono "></i>
                         <span>Realizar venta</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="/productos" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-ruler-pencil"></i>
+                        <i class="lni lni-ruler-pencil icono"></i>
                         <span>Productos</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
@@ -68,21 +69,26 @@
                
                 <li class="sidebar-item">
                     <a href="{{ route('HistorialVentas') }}" class="sidebar-link">
-                        <i class="lni lni-hourglass"></i>
+                        <i class="lni lni-hourglass icono"></i>
                         <span>Historial de ventas</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a href="/empleados2" class="sidebar-link">
-                        <i class="lni lni-briefcase"></i>
+                        <i class="lni lni-briefcase icono"></i>
                         <span>Empleados</span>
                     </a>
                 </li>
-               
+                <li class="sidebar-item">
+                    <a href="/add-empleado" class="sidebar-link">
+                        <i class="lni lni-users icono"></i>
+                        <span>Administrar Empleados</span>
+                    </a>
+                </li>
             </ul>
             <div class="sidebar-footer">
                 <a href="/" class="sidebar-link">
-                    <i class="lni lni-exit"></i>
+                    <i class="lni lni-exit icono"></i>
                     <span>Cerrar sesión</span>
                 </a>
             </div>

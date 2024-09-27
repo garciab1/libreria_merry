@@ -71,7 +71,7 @@ class RealizarVentaUserController extends Controller
                 if ($producto) {
                     $nuevoStock = $producto['stock'] - $articulo['cantidad'];
     
-                    // Asegurar que el stock no quede en negativo
+                    // Asegura que el stock no quede en negativo
                     if ($nuevoStock < 0) $nuevoStock = 0;
     
                     // Actualizar el stock en Firebase
@@ -92,7 +92,7 @@ class RealizarVentaUserController extends Controller
     // Método para buscar artículos
     public function searchArticuloRuser(Request $request)
     {
-        $query = $request->query('query', ''); // Obtén la consulta de búsqueda o una cadena vacía
+        $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
         $productos = $this->database->getReference($this->tablaProductos)->getValue();
 
         // Si hay una consulta de búsqueda, filtra los productos
@@ -114,7 +114,7 @@ class RealizarVentaUserController extends Controller
             return redirect()->route('RealizarVentaUser.index')->with('status', 'Venta no encontrada.');
         }
     
-        // Asegúrate de que cada artículo tenga el nombre del producto
+        // Asegúrar de que cada artículo tenga el nombre del producto
         foreach ($venta['articulos'] as &$articulo) {
             $codigoProducto = $articulo['codigo'];
             $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();

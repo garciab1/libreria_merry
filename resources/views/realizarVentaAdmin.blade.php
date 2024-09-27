@@ -279,13 +279,11 @@
 
     document.getElementById('articulos').value = JSON.stringify(articulos);
     
-    // Luego puedes enviar el formulario de forma manual si todo está bien
     this.submit();
 });
 
 
 window.onload = function() {
-        // Obtener la fecha y hora actual
         const fechaActual = new Date();
         
         // Obtener los componentes de la fecha
@@ -298,7 +296,6 @@ window.onload = function() {
         // Formatear la fecha en 'YYYY-MM-DDTHH:mm' para el campo datetime-local
         const fechaFormateada = `${year}-${month}-${day}T${hours}:${minutes}`;
         
-        // Asignar el valor al input con id="fecha_venta"
         document.getElementById('fecha_venta').value = fechaFormateada;
     }
 

@@ -93,7 +93,7 @@ class RealizarVentaController extends Controller
     // Método para buscar artículos
     public function searchArticulo(Request $request)
     {
-        $query = $request->query('query', ''); // Obtén la consulta de búsqueda o una cadena vacía
+        $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
         $productos = $this->database->getReference($this->tablaProductos)->getValue();
 
         // Si hay una consulta de búsqueda, filtra los productos
@@ -106,6 +106,9 @@ class RealizarVentaController extends Controller
         return response()->json($productos);
     }
 
+    
+
+    //Funcion para visualizar el historial de la venta
     public function showVentas()
     {
         $ventas = $this->database->getReference($this->tablaVentas)->getValue();

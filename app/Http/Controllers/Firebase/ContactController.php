@@ -27,6 +27,7 @@ class ContactController extends Controller
         return view('firebase.Contact.producto_stock', compact('productos'));
     }
 
+    //Llama la vista
     public function create()
     {
         return view('firebase.Contact.agg_producto');

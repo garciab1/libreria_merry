@@ -116,6 +116,7 @@ class NewproductoController extends Controller
         $key = $id;
         $del_data = $this->database->getReference($this->tablename.'/'.$key)->remove();
         if($del_data){
+            //redirecciona  al vista
             return redirect('productosUser')->with('status', 'Producto eliminado exitosamente.');
         }
         else{
