@@ -33,7 +33,16 @@
                         <tbody id="productTableBody">
                             @forelse ($productos as $key => $item)
                             <tr>
-                                <td>{{$item['nombre_producto']}}</td>
+                                <td>
+                                    {{$item['nombre_producto']}}
+                                    @if($item['stock'] <= 5)
+                                        <span class="badge bg-danger">Stock crítico</span>
+                                    @elseif($item['stock'] <= 10)
+                                        <span class="badge bg-warning">Stock bajo</span>
+                                    @elseif($item['stock'] <= 20)
+                                        <span class="badge bg-success">Stock medio</span>
+                                    @endif
+                                </td>
                                 <td>{{$item['precio_unitario']}}</td>
                                 <td>{{$item['stock']}}</td>
                                 <td>{{$item['proveedor']}}</td>
@@ -72,7 +81,7 @@
             var cells = row.getElementsByTagName('td');
             var match = false;
 
-            for (var i = 0; i < cells.length - 1; i++) { // Excluir la última celda con opciones
+            for (var i = 0; i < cells.length - 1; i++) { 
                 var cell = cells[i];
                 if (cell.textContent.toLowerCase().includes(input)) {
                     match = true;
