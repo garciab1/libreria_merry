@@ -37,10 +37,9 @@
                     <input type="text" class="form-control" id="buscar_articulo" name="buscar_articulo" placeholder="Ingrese nombre o código del artículo">
                 </div>
 
-                <button type="button" class="btn btn-secondary mb-3" id="buscar_articulo_btn">Buscar Artículo</button>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="tabla_vista_previa">
+                  <!-- Resultados de búsqueda en tiempo real -->
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
                         <thead class="thead-light">
                             <tr>
                                 <th>Nombre del Artículo</th>
@@ -51,6 +50,8 @@
                         <tbody id="vista_previa_articulos"></tbody>
                     </table>
                 </div>
+
+            
 
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered">
@@ -78,7 +79,7 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-success" id="realizar_venta_btn">Realizar Venta</button>
-                    <button type="button" class="btn btn-danger" id="cancelar_venta_btn">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="cancelar_venta_btn" onclick="window.location.href='/inicio_user'">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -125,58 +126,66 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script>
-        document.getElementById('buscar_articulo_btn').addEventListener('click', function () {
-            let articuloBuscado = document.getElementById('buscar_articulo').value;
+        $(document).ready(function () 
+        {
+            $('#buscar_articulo').on('keyup', function () {
+                let articuloBuscado = $(this).val();
 
-            if (articuloBuscado.trim() === '') {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo de búsqueda vacío',
-                    text: 'Por favor, ingrese el nombre o código del artículo.',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
-                return;
-            }
+                if (articuloBuscado.trim() === '') {
+                    $('#vista_previa_articulos').empty();
+                    return;
+                }
 
-            fetch('{{ route('RealizarVentaUser.buscarArticulo') }}?query=' + encodeURIComponent(articuloBuscado))
-                .then(response => response.json())
-                .then(data => {
-                    let vistaPrevia = document.getElementById('vista_previa_articulos');
-                    vistaPrevia.innerHTML = '';
+                $.ajax({
+                    url: '{{ route('RealizarVentaUser.buscarArticulo') }}',
+                    method: 'GET',
+                    data: { query: articuloBuscado },
+                    success: function (data) {
+                        let vistaPrevia = $('#vista_previa_articulos');
+                        vistaPrevia.empty();
 
-                    if (data && Object.keys(data).length) {
-                        Object.keys(data).forEach(key => {
-                            let articulo = data[key];
-                            let nuevaFila = `
-                                <tr>
-                                    <td>${articulo.nombre_producto}</td>
-                                    <td>${articulo.stock > 0 ? 'Disponible' : 'No disponible'}</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm agregarArticulo" data-id="${key}" data-nombre="${articulo.nombre_producto}" data-stock="${articulo.stock}" data-precio="${articulo.precio_unitario}">Agregar</button></td>
-                                </tr>
-                            `;
-                            vistaPrevia.insertAdjacentHTML('beforeend', nuevaFila);
-                        });
-                    } else {
+                        if (data && Object.keys(data).length) {
+                            Object.keys(data).forEach(key => {
+                                let articulo = data[key];
+                                let nuevaFila = `
+                                    <tr>
+                                        <td>${articulo.nombre_producto}</td>
+                                        <td>${articulo.stock > 0 ? 'Disponible' : 'No disponible'}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm agregarArticulo" 
+                                                data-id="${key}" 
+                                                data-nombre="${articulo.nombre_producto}" 
+                                                data-stock="${articulo.stock}" 
+                                                data-precio="${articulo.precio_unitario}" 
+                                                ${articulo.stock > 0 ? '' : 'disabled'}>
+                                                Agregar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+                                vistaPrevia.append(nuevaFila);
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Sin resultados',
+                                text: 'No se encontraron artículos que coincidan con la búsqueda.',
+                                timer: 3000,
+                                showConfirmButton: false
+                            });
+                        }
+                    },
+                    error: function (error) {
                         Swal.fire({
-                            icon: 'info',
-                            title: 'Sin resultados',
-                            text: 'No se encontraron artículos que coincidan con la búsqueda.',
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al buscar los artículos.',
                             timer: 3000,
                             showConfirmButton: false
                         });
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Hubo un problema al buscar los artículos.',
-                        timer: 3000,
-                        showConfirmButton: false
-                    });
                 });
+            });
         });
 
         document.addEventListener('click', function (e) {

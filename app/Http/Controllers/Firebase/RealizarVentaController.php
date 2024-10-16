@@ -91,20 +91,40 @@ class RealizarVentaController extends Controller
 
 
     // Método para buscar artículos
+    // public function searchArticulo(Request $request)
+    // {
+    //     $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
+    //     $productos = $this->database->getReference($this->tablaProductos)->getValue();
+
+    //     // Si hay una consulta de búsqueda, filtra los productos
+    //     if ($query) {
+    //         $productos = array_filter($productos, function ($producto) use ($query) {
+    //             return stripos($producto['nombre_producto'], $query) !== false;
+    //         });
+    //     }
+
+    //     return response()->json($productos);
+    // }
     public function searchArticulo(Request $request)
     {
         $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
         $productos = $this->database->getReference($this->tablaProductos)->getValue();
 
-        // Si hay una consulta de búsqueda, filtra los productos
         if ($query) {
             $productos = array_filter($productos, function ($producto) use ($query) {
                 return stripos($producto['nombre_producto'], $query) !== false;
             });
         }
 
+        // Filtrar productos con stock disponible
+        foreach ($productos as &$producto) {
+            $producto['stock_disponible'] = $producto['stock'] > 0; // Agrega un campo para indicar si hay stock
+        }
+
         return response()->json($productos);
     }
+
+
 
     
 
