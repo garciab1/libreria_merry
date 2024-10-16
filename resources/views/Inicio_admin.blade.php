@@ -1,89 +1,104 @@
 <x-MenuAdmin>
     <style>
-
         .tarjeta-efecto {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
         }
-        
+
         .tarjeta-efecto:hover {
-            transform: scale(1.05); /* Pequeño zoom */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más profunda al hacer hover */
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: #007bff;
+            text-decoration: none;
         }
-        /* Estilos básicos del título */
+
+        .tarjeta-efecto img {
+            transition: filter 0.3s ease;
+            filter: grayscale(100%) !important;
+        }
+
+        .tarjeta-efecto:hover img {
+            filter: grayscale(0%) !important;
+        }
+
+        .tarjeta-efecto h5 {
+            color: #333;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .tarjeta-efecto:hover h5 {
+            color: white;
+            text-decoration: none;
+        }
+
         h1 {
-            font-size: 2.5rem; /* Tamaño del título */
-            color: #333; /* Color inicial del texto */
-            transition: color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
+            font-size: 2.5rem;
+            color: #333;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
-        
-        /* Efecto al pasar el puntero por encima */
+
         h1:hover {
-            color: #142b4d; /* Cambia el color del título al pasar el puntero */
-            transform: scale(1.1); /* Aumenta ligeramente el tamaño del título */
+            color: #142b4d;
+            transform: scale(1.1);
         }
-            </style>
+    </style>
+
     <div class="text-center">
-    <h1>
-        <br><b>LIBRERÍA MERRY</b></h1>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <!-- Tarjeta 1 -->
-            <div class="col-md-4 mb-4">
-                <div class="card tarjeta-efecto">
-                    <div class="card-body">
-                        <img src="{{ asset('images/venta.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="/realizarVentaAdmin" class="btn btn-primary">Realizar venta</a>
-                    </div>
+        <h1><br><b>LIBRERÍA MERRY</b></h1>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-4">
+                    <a href="/realizarVentaAdmin" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/venta-color.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Realizar venta</h5>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="/add-product" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/nuevo-producto-color.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Nuevo producto</h5>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="/productos" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/stock-color.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Productos y stock</h5>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="{{ route('HistorialVentas') }}" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/historial-color.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Historial de ventas</h5>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="/empleados2" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/empleados-color.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Empleados</h5>
+                        </div>
+                    </a>
                 </div>
             </div>
-    
-            <!-- Tarjeta 2 -->
-            <div class="col-md-4 mb-4">
-                <div class="card tarjeta-efecto">
-                    <div class="card-body">
-                        <img src="{{ asset('images/producto.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="/add-product" class="btn btn-primary">Nuevo producto</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Tarjeta 3 -->
-            <div class="col-md-4 mb-4">
-                <div class="card tarjeta-efecto">
-                    <div class="card-body">
-                        <img src="{{ asset('images/stock.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="/productos" class="btn btn-primary">Productos y stock</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Tarjeta 4 -->
-            <div class="col-md-4 mb-4">
-                <div class="card tarjeta-efecto">
-                    <div class="card-body">
-                        <img src="{{ asset('images/historial.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="{{ route('HistorialVentas') }}" class="btn btn-primary">Historial de ventas</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Tarjeta 5 -->
-            <div class="col-md-4 mb-4">
-                <div class="card tarjeta-efecto">
-                    <div class="card-body">
-                        <img src="{{ asset('images/empleado.png') }}" alt="Descripción de la imagen" width="100">
-                        <br><br>
-                        <a href="/empleados2" class="btn btn-primary">Empleados</a>
-                    </div>
-                </div>
-            </div>
-              
         </div>
-    </div>
     </div>
 </x-MenuAdmin>
