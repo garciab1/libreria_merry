@@ -88,23 +88,7 @@ class RealizarVentaController extends Controller
     }
     
 
-
-
-    // Método para buscar artículos
-    // public function searchArticulo(Request $request)
-    // {
-    //     $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
-    //     $productos = $this->database->getReference($this->tablaProductos)->getValue();
-
-    //     // Si hay una consulta de búsqueda, filtra los productos
-    //     if ($query) {
-    //         $productos = array_filter($productos, function ($producto) use ($query) {
-    //             return stripos($producto['nombre_producto'], $query) !== false;
-    //         });
-    //     }
-
-    //     return response()->json($productos);
-    // }
+    // Método para buscar artículos en tiempo real
     public function searchArticulo(Request $request)
     {
         $query = $request->query('query', ''); // Obtiene la consulta de búsqueda o una cadena vacía
@@ -124,9 +108,7 @@ class RealizarVentaController extends Controller
         return response()->json($productos);
     }
 
-
-
-    
+        
 
     //Funcion para visualizar el historial de la venta
     public function showVentas()

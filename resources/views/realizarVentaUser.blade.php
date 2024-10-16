@@ -39,17 +39,17 @@
 
                   <!-- Resultados de búsqueda en tiempo real -->
                   <div class="table-responsive mt-3">
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Nombre del Artículo</th>
-                                <th>Disponibilidad</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="vista_previa_articulos"></tbody>
-                    </table>
-                </div>
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nombre del Artículo</th>
+                                    <th>Disponibilidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vista_previa_articulos"></tbody>
+                        </table>
+                    </div>
 
             
 
@@ -79,7 +79,7 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-success" id="realizar_venta_btn">Realizar Venta</button>
-                    <button type="button" class="btn btn-danger" id="cancelar_venta_btn" onclick="window.location.href='/inicio_user'">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="cancelar_venta_btn" onclick="window.location.href='/login'">Cancelar</button>
                 </div>
             </form>
         </div>

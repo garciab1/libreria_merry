@@ -37,10 +37,9 @@
                     <input type="text" class="form-control" id="buscar_articulo" name="buscar_articulo" placeholder="Ingrese nombre o código del artículo">
                 </div>
 
-                <button type="button" class="btn btn-secondary mb-3" id="buscar_articulo_btn">Buscar Artículo</button>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="tabla_vista_previa">
+               <!-- Resultados de búsqueda en tiempo real -->
+               <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
                         <thead class="thead-light">
                             <tr>
                                 <th>Nombre del Artículo</th>
@@ -50,7 +49,7 @@
                         </thead>
                         <tbody id="vista_previa_articulos"></tbody>
                     </table>
-                </div>
+             </div>
 
                 <div class="table-responsive mt-4">
                     <table class="table table-bordered">
@@ -125,17 +124,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script>
-        document.getElementById('buscar_articulo_btn').addEventListener('click', function () {
-            let articuloBuscado = document.getElementById('buscar_articulo').value;
+        // Función para buscar artículos en tiempo real
+        document.getElementById('buscar_articulo').addEventListener('input', function () {
+            let articuloBuscado = this.value;
 
             if (articuloBuscado.trim() === '') {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campo de búsqueda vacío',
-                    text: 'Por favor, ingrese el nombre o código del artículo.',
-                    timer: 3000,
-                    showConfirmButton: false
-                });
+                document.getElementById('vista_previa_articulos').innerHTML = ''; // Limpiar resultados si el campo está vacío
                 return;
             }
 
@@ -148,23 +142,29 @@
                     if (data && Object.keys(data).length) {
                         Object.keys(data).forEach(key => {
                             let articulo = data[key];
+                            let disponible = articulo.stock > 0 ? 'Disponible' : 'No disponible';
+                            let botonAgregar = articulo.stock > 0 ? '' : 'disabled';
+
                             let nuevaFila = `
                                 <tr>
                                     <td>${articulo.nombre_producto}</td>
-                                    <td>${articulo.stock > 0 ? 'Disponible' : 'No disponible'}</td>
-                                    <td><button type="button" class="btn btn-primary btn-sm agregarArticulo" data-id="${key}" data-nombre="${articulo.nombre_producto}" data-stock="${articulo.stock}" data-precio="${articulo.precio_unitario}">Agregar</button></td>
+                                    <td>${disponible}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm agregarArticulo" 
+                                            data-id="${key}" 
+                                            data-nombre="${articulo.nombre_producto}" 
+                                            data-stock="${articulo.stock}" 
+                                            data-precio="${articulo.precio_unitario}"
+                                            ${botonAgregar}>
+                                            Agregar
+                                        </button>
+                                    </td>
                                 </tr>
                             `;
                             vistaPrevia.insertAdjacentHTML('beforeend', nuevaFila);
                         });
                     } else {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Sin resultados',
-                            text: 'No se encontraron artículos que coincidan con la búsqueda.',
-                            timer: 3000,
-                            showConfirmButton: false
-                        });
+                        vistaPrevia.innerHTML = '<tr><td colspan="3" class="text-center">No se encontraron artículos.</td></tr>';
                     }
                 })
                 .catch(error => {
@@ -178,6 +178,7 @@
                     });
                 });
         });
+
 
         document.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('agregarArticulo')) {
@@ -275,31 +276,32 @@
     });
 
     // Aquí imprimimos el JSON en la consola
-    console.log(JSON.stringify(articulos, null, 2));
+        console.log(JSON.stringify(articulos, null, 2));
 
-    document.getElementById('articulos').value = JSON.stringify(articulos);
-    
-    this.submit();
-});
-
-
-window.onload = function() {
-        const fechaActual = new Date();
+        document.getElementById('articulos').value = JSON.stringify(articulos);
         
-        // Obtener los componentes de la fecha
-        const year = fechaActual.getFullYear();
-        const month = ('0' + (fechaActual.getMonth() + 1)).slice(-2); // Mes (añadir 0 si es necesario)
-        const day = ('0' + fechaActual.getDate()).slice(-2); // Día (añadir 0 si es necesario)
-        const hours = ('0' + fechaActual.getHours()).slice(-2); // Horas
-        const minutes = ('0' + fechaActual.getMinutes()).slice(-2); // Minutos
+        this.submit();
+    });
 
-        // Formatear la fecha en 'YYYY-MM-DDTHH:mm' para el campo datetime-local
-        const fechaFormateada = `${year}-${month}-${day}T${hours}:${minutes}`;
-        
-        document.getElementById('fecha_venta').value = fechaFormateada;
+
+    window.onload = function() 
+    {
+            const fechaActual = new Date();
+            
+            // Obtener los componentes de la fecha
+            const year = fechaActual.getFullYear();
+            const month = ('0' + (fechaActual.getMonth() + 1)).slice(-2); // Mes (añadir 0 si es necesario)
+            const day = ('0' + fechaActual.getDate()).slice(-2); // Día (añadir 0 si es necesario)
+            const hours = ('0' + fechaActual.getHours()).slice(-2); // Horas
+            const minutes = ('0' + fechaActual.getMinutes()).slice(-2); // Minutos
+
+            // Formatear la fecha en 'YYYY-MM-DDTHH:mm' para el campo datetime-local
+            const fechaFormateada = `${year}-${month}-${day}T${hours}:${minutes}`;
+            
+            document.getElementById('fecha_venta').value = fechaFormateada;
     }
 
-    </script>
+ </script>
 </body>
 </x-secciones-layout>
 
