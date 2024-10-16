@@ -125,7 +125,7 @@ class RealizarVentaUserController extends Controller
             $articulo['nombre_producto'] = $producto['nombre_producto'] ?? 'Producto desconocido';
         }
     
-        return view('comprobanteVenta', compact('venta'));
+        return view('comprobanteVentaUser', compact('venta'));
     }
     
 

@@ -25,6 +25,7 @@ use App\Http\Controllers\HomeControler;
 
     //Ruta de impresion
     Route::get('realizar-venta/imprimir/{ventaId}', [RealizarVentaController::class, 'imprimirComprobante'])->name('RealizarVenta.imprimirComprobante');
+    Route::get('realizar-venta/imprimir/{ventaId}', [RealizarVentaUserController::class, 'imprimirComprobante'])->name('RealizarVenta.imprimirComprobante');
 
 
     // VALIDACION ROL ADMIN

@@ -79,7 +79,7 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-success" id="realizar_venta_btn">Realizar Venta</button>
-                    <button type="button" class="btn btn-danger" id="cancelar_venta_btn" onclick="window.location.href='/login'">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniUser') }}'">Cancelar</button>
                 </div>
             </form>
         </div>
@@ -113,7 +113,6 @@
                     <p><strong>Total de la Venta:</strong> <span id="modalTotalVenta"></span></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="imprimir_comprobante_btn">Imprimir Comprobante</button>
                 </div>
             </div>

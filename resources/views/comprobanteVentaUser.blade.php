@@ -35,7 +35,7 @@
         </table>
         <p><strong>Total:</strong> {{ number_format($venta['total'], 2) }}</p>
         <button onclick="window.print();" class="btn btn-primary">Imprimir Comprobante</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniAdmin') }}'">Cerrar</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniUser') }}'">Cerrar</button>
 
     </div>
 </body>
