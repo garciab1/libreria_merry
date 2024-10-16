@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeControler extends Controller
+class HomeController extends Controller
 {
     public function index()
     {
         return view('welcome');
+    }
+
+    public function cancelarse()
+    {
+        return view('cancelar');
     }
 }
 

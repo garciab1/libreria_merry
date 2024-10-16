@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeControler;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Inicioadmin_Controller;
 use App\Http\Controllers\InicioUser_Controller;
 use App\Http\Controllers\Firebase\ContactController;
@@ -11,7 +11,7 @@ use App\Http\Controllers\Firebase\RealizarVentaController;
 use App\Http\Controllers\Firebase\RealizarVentaUserController;
 use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\auth\GoogleController;
-
+use App\Http\Controllers\HomeControler;
 
    //Autenticacion
 
@@ -20,7 +20,8 @@ use App\Http\Controllers\auth\GoogleController;
     Route::get('/testfire', [GoogleController::class, 'testFirebaseConnection']);
 
     //RutasBasicas
-    Route::get('/', [HomeControler::class,'index']);
+    Route::get('/', [HomeController::class,'index']);
+    Route::get('cancel', [HomeController::class, 'cancelarse']);
 
     //Ruta de impresion
     Route::get('realizar-venta/imprimir/{ventaId}', [RealizarVentaController::class, 'imprimirComprobante'])->name('RealizarVenta.imprimirComprobante');

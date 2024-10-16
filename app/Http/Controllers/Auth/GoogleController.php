@@ -55,7 +55,7 @@ class GoogleController extends Controller
             }
 
         } catch (\Exception $e) {
-            return redirect('/login')->withErrors(['error' => $e->getMessage()]);
+            return redirect('/cancel')->withErrors(['error' => $e->getMessage()]);
         }
     }
 
@@ -105,7 +105,7 @@ class GoogleController extends Controller
                 throw new \Exception('Error al guardar datos en Firebase.');
             }
         }
-    }
+    } 
 
     private function getUserFromFirebase($email)
     {
