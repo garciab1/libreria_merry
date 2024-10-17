@@ -46,7 +46,7 @@ use App\Http\Controllers\HomeControler;
         Route::post('/add-product', [ContactController::class, 'store']);
         Route::get('edit-producto/{id}', [ContactController::class, 'editProducto']); //mostrar editar
         Route::put('update-producto/{id}', [ContactController::class, 'updateProducto']); //actualizar
-        Route::get('delete-producto/{id}', [ContactController::class, 'destroyProducto']); //eliminar
+        Route::delete('delete-producto/{id}', [ContactController::class, 'destroyProducto']); //eliminar
 
         //Rutas para Empleados admin
         Route::get('/empleados2', [EmpleadosController::class, 'indexEmpleados']); //Ver listado admin
@@ -54,7 +54,7 @@ use App\Http\Controllers\HomeControler;
         Route::post('/add-empleado', [EmpleadosController::class, 'storeEmpleado']); //guardar
         Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']); //mostrar editar
         Route::put('update-empleado/{id}', [EmpleadosController::class, 'updateEmpleado']); //actualizar
-        Route::get('delete-empleado/{id}', [EmpleadosController::class, 'destroyEmpleado']); //eliminar
+        Route::delete('delete-empleado/{id}', [EmpleadosController::class, 'destroyEmpleado']); //eliminar
 
     });
 
@@ -78,7 +78,8 @@ use App\Http\Controllers\HomeControler;
         Route::post('/add-productUser', [NewproductoController::class, 'storeUser']);
         Route::get('edit-productoUser/{id}', [NewproductoController::class, 'editProductoUser']); //mostrar editar
         Route::put('update-productoUser/{id}', [NewproductoController::class, 'updateProductoUser']); //actualizar
-        Route::get('delete-productoUser/{id}', [NewproductoController::class, 'destroyProductoUser']); //eliminar
+        Route::delete('delete-productoUser/{id}', [NewproductoController::class, 'destroyProductoUser']);//eliminar
+
 
     });
 
