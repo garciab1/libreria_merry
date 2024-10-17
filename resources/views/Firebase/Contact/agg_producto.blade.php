@@ -67,14 +67,12 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary me-2">Agregar</button>
-                <button type="button" class="btn btn-secondary" onclick="cancelForm()">Cancelar</button>
-
+                <button type="submit" class="btn btn-success me-2">Agregar</button>
+                <button type="button" class="btn btn-secondary me-2" onclick="cancelForm()">Cancelar</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniAdmin') }}'">Cerrar</button>
             </div>
             
-
-
-
+    
         </form>
     </div>
 
