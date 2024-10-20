@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
 use Kreait\Laravel\Firebase\Facades\Firebase;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class RealizarVentaController extends Controller
 {
@@ -27,64 +29,75 @@ class RealizarVentaController extends Controller
 
     public function store(Request $request)
     {
-        // Validación de los campos del formulario
-        $request->validate([
-            'nombre_cliente' => 'required|string|max:255',
-            'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
-            'articulos' => 'required|json'
-        ]);
-    
-        // Decodificar los artículos del JSON
-        $articulos = json_decode($request->input('articulos'), true);
-    
-        if (empty($articulos)) {
-            return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
+       // Validación de los campos del formulario
+       $request->validate([
+        'nombre_cliente' => 'required|string|max:255',
+        'fecha_venta' => 'required|date_format:Y-m-d\TH:i',
+        'articulos' => 'required|json'
+    ]);
+
+    // Decodificar los artículos del JSON
+    $articulos = json_decode($request->input('articulos'), true);
+
+    if (empty($articulos)) {
+        return redirect()->route('RealizarVenta.index')->with('status', 'No se han agregado artículos a la venta.');
+    }
+
+    // Verificar que todos los artículos tengan stock disponible
+    foreach ($articulos as $articulo) {
+        $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
+        $producto = $productoRef->getValue();
+
+        if ($producto && $producto['stock'] <= 0) {
+            return redirect()->route('RealizarVenta.index')->with('status', 'El artículo ' . $producto['nombre_producto'] . ' no está disponible.');
         }
-    
-        // Verificar que todos los artículos tengan stock disponible
+    }
+
+    // Preparar los datos de la venta
+    $ventaData = [
+        'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
+        'fecha_venta' => $request->input('fecha_venta'),
+        'articulos' => $articulos,
+        'total' => array_sum(array_column($articulos, 'subtotal')),
+    ];
+
+    // Registrar la venta en Firebase
+    $ventaRef = $this->database->getReference($this->tablaVentas)->push($ventaData);
+
+    if ($ventaRef) {
+        // Actualizar el stock de los productos
         foreach ($articulos as $articulo) {
             $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
             $producto = $productoRef->getValue();
-    
-            if ($producto && $producto['stock'] <= 0) {
-                // Si algún artículo tiene stock 0, redirige con un mensaje de error
-                return redirect()->route('RealizarVenta.index')->with('status', 'El artículo ' . $producto['nombre_producto'] . ' no está disponible.');
+
+            if ($producto) {
+                $nuevoStock = $producto['stock'] - $articulo['cantidad'];
+
+                // Asegura que el stock no quede en negativo
+                if ($nuevoStock < 0) $nuevoStock = 0;
+
+                // Actualizar el stock en Firebase
+                $productoRef->update(['stock' => $nuevoStock]);
             }
         }
-    
-        // Preparar los datos de la venta
-        $ventaData = [
-            'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
-            'fecha_venta' => $request->input('fecha_venta'),
+
+        // Generar el comprobante
+        $comprobante = [
+            'nombre_cliente' => $ventaData['nombre_cliente'],
+            'fecha_venta' => $ventaData['fecha_venta'],
             'articulos' => $articulos,
-            'total' => array_sum(array_column($articulos, 'subtotal'))
+            'total' => $ventaData['total'],
+            'venta_id' => $ventaRef->getKey(),
         ];
-    
-        // Registrar la venta en Firebase
-        $ventaRef = $this->database->getReference($this->tablaVentas)->push($ventaData);
-    
-        if ($ventaRef) {
-            // Actualizar el stock de los productos
-            foreach ($articulos as $articulo) {
-                $productoRef = $this->database->getReference($this->tablaProductos . '/' . $articulo['codigo']);
-                $producto = $productoRef->getValue();
-    
-                if ($producto) {
-                    $nuevoStock = $producto['stock'] - $articulo['cantidad'];
-    
-                    // Asegurar que el stock no quede en negativo
-                    if ($nuevoStock < 0) $nuevoStock = 0;
-    
-                    // Actualizar el stock en Firebase
-                    $productoRef->update(['stock' => $nuevoStock]);
-                }
-            }
-    
-            // Redirigir a la vista del comprobante
-            return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
-        } else {
-            return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
-        }
+
+        // Guardar el comprobante en el campo 'comprobante'
+        $ventaRef->update(['comprobante' => $comprobante]);
+
+        // Redirigir a la vista del comprobante
+        return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
+    } else {
+        return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
+    }
     }
     
 
@@ -143,14 +156,28 @@ class RealizarVentaController extends Controller
             return redirect()->route('RealizarVenta.index')->with('status', 'Venta no encontrada.');
         }
     
+        // Verificar que 'articulos' esté definido y sea un array
+        if (!isset($venta['articulos']) || !is_array($venta['articulos'])) {
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se encontraron artículos para esta venta.');
+        }
+    
         // Asegúrate de que cada artículo tenga el nombre del producto
         foreach ($venta['articulos'] as &$articulo) {
             $codigoProducto = $articulo['codigo'];
             $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();
-            $articulo['nombre_producto'] = $producto['nombre_producto'] ?? 'Producto desconocido';
+    
+            if ($producto && isset($producto['nombre_producto'])) {
+                $articulo['nombre_producto'] = $producto['nombre_producto'];
+            } else {
+                $articulo['nombre_producto'] = 'Producto desconocido';
+            }
         }
     
-        return view('comprobanteVenta', compact('venta'));
+        // Generar el PDF
+        $pdf = Pdf::loadView('comprobanteVentaUser', compact('venta'));
+    
+        // Descargar el PDF o mostrarlo en pantalla
+        return $pdf->stream('comprobante_venta_' . $ventaId . '.pdf');
     }
     
 

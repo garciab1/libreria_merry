@@ -2,16 +2,30 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Comprobante de Venta</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header, .footer {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Libreria Merry</h1>
-        <h5>Dirección: Final Sexta Avenidad Norte</h5>
-        <h3><center>Comprobante de Venta<center></h3>
+        <div class="header">
+            <h1>Libreria Merry</h1>
+            <h5>Dirección: Final Sexta Avenida Norte</h5>
+            <h3>Comprobante de Venta</h3>
+        </div>
+        
         <p><strong>Nombre del Cliente:</strong> {{ $venta['nombre_cliente'] }}</p>
-        <p><strong>Fecha de la Venta:</strong> {{ $venta['fecha_venta'] }}</p>
+        <p><strong>Fecha de la Venta:</strong> {{ \Carbon\Carbon::parse($venta['fecha_venta'])->format('d/m/Y H:i') }}</p>
+        
         <h3>Artículos</h3>
         <table class="table">
             <thead>
@@ -33,10 +47,15 @@
                 @endforeach
             </tbody>
         </table>
-        <p><strong>Total:</strong> {{ number_format($venta['total'], 2) }}</p>
-        <button onclick="window.print();" class="btn btn-primary">Imprimir Comprobante</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniUser') }}'">Cerrar</button>
+        
+        <p><strong>Total:</strong> {{ number_format(array_sum(array_column($venta['articulos'], 'subtotal')), 2) }}</p>
+        
+        {{-- <button onclick="window.print();" class="btn btn-primary">Imprimir Comprobante</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='{{ route('IniUser') }}'">Cerrar</button> --}}
 
+        <div class="footer">
+            <p>Gracias por su compra. Para consultas, llame al merrylibreria@gmail.com </p>
+        </div>
     </div>
 </body>
 </html>

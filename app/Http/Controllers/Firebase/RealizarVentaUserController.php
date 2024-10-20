@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Firebase;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Contract\Database;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class RealizarVentaUserController extends Controller
 {
@@ -24,6 +25,7 @@ class RealizarVentaUserController extends Controller
         return view('realizarVentaUser');
     }
 
+    
     public function storeRuser(Request $request)
     {
         // Validación de los campos del formulario
@@ -46,7 +48,6 @@ class RealizarVentaUserController extends Controller
             $producto = $productoRef->getValue();
     
             if ($producto && $producto['stock'] <= 0) {
-                // Si algún artículo tiene stock 0, redirige con un mensaje de error
                 return redirect()->route('RealizarVentaUser.index')->with('status', 'El artículo ' . $producto['nombre_producto'] . ' no está disponible.');
             }
         }
@@ -56,7 +57,7 @@ class RealizarVentaUserController extends Controller
             'nombre_cliente' => strtoupper($request->input('nombre_cliente')),
             'fecha_venta' => $request->input('fecha_venta'),
             'articulos' => $articulos,
-            'total' => array_sum(array_column($articulos, 'subtotal'))
+            'total' => array_sum(array_column($articulos, 'subtotal')),
         ];
     
         // Registrar la venta en Firebase
@@ -79,15 +80,27 @@ class RealizarVentaUserController extends Controller
                 }
             }
     
+            // Generar el comprobante
+            $comprobante = [
+                'nombre_cliente' => $ventaData['nombre_cliente'],
+                'fecha_venta' => $ventaData['fecha_venta'],
+                'articulos' => $articulos,
+                'total' => $ventaData['total'],
+                'venta_id' => $ventaRef->getKey(),
+            ];
+    
+            // Guardar el comprobante en el campo 'comprobante'
+            $ventaRef->update(['comprobante' => $comprobante]);
+    
             // Redirigir a la vista del comprobante
             return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
         } else {
             return redirect()->route('RealizarVentaUser.index')->with('status', 'No se pudo realizar la venta.');
         }
     }
+
+
     
-
-
 
     // Método para buscar artículos
     public function searchArticuloRuser(Request $request)
@@ -109,6 +122,8 @@ class RealizarVentaUserController extends Controller
         return response()->json($productos);
     }
 
+ 
+    
     public function imprimirComprobante($ventaId)
     {
         // Obtener la venta específica desde Firebase
@@ -118,17 +133,34 @@ class RealizarVentaUserController extends Controller
             return redirect()->route('RealizarVentaUser.index')->with('status', 'Venta no encontrada.');
         }
     
-        // Asegúrar de que cada artículo tenga el nombre del producto
+        // Verificar que 'articulos' esté definido y sea un array
+        if (!isset($venta['articulos']) || !is_array($venta['articulos'])) {
+            return redirect()->route('RealizarVentaUser.index')->with('status', 'No se encontraron artículos para esta venta.');
+        }
+    
+        // Asegúrate de que cada artículo tenga el nombre del producto
         foreach ($venta['articulos'] as &$articulo) {
             $codigoProducto = $articulo['codigo'];
             $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();
-            $articulo['nombre_producto'] = $producto['nombre_producto'] ?? 'Producto desconocido';
+    
+            if ($producto && isset($producto['nombre_producto'])) {
+                $articulo['nombre_producto'] = $producto['nombre_producto'];
+            } else {
+                $articulo['nombre_producto'] = 'Producto desconocido';
+            }
         }
     
-        return view('comprobanteVentaUser', compact('venta'));
-    }
+        // Generar el PDF
+        $pdf = Pdf::loadView('comprobanteVentaUser', compact('venta'));
     
-
+        // Descargar el PDF o mostrarlo en pantalla
+        return $pdf->stream('comprobante_venta_' . $ventaId . '.pdf');
+    } 
+    
+    
+   
+    
+    
 
 }
 
