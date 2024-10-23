@@ -14,19 +14,19 @@
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Sobrescribir estilos de btn-primary */
+        
         .btn-primary {
-            background-color: #0e2238; /* Color de fondo personalizado (Tomato) */
-            border-color: #0e2238; /* Borde personalizado */
+            background-color: #0e2238; 
+            border-color: #0e2238; 
         }
 
         .btn-primary:hover {
-            background-color: #4a4948; /* Color de fondo al pasar el ratón (OrangeRed) */
-            border-color: #4a4948; /* Borde al pasar el ratón */
+            background-color: #4a4948; 
+            border-color: #4a4948; 
         }
 
         .sidebar-link:hover {
-        text-decoration: none; /* Asegúrate de que no haya subrayado al pasar el ratón */
+        text-decoration: none; 
     }
         
     </style>

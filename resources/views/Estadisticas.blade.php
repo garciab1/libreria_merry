@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <!-- Tarjetas con estadísticas -->
+            
             <div class="row mt-3">
                 <!-- Ventas del día -->
                 <div class="col-md-4">
@@ -123,7 +123,7 @@
     // Productos más vendidos
     var ctxMasVendidos = document.getElementById('chartMasVendidos').getContext('2d');
     new Chart(ctxMasVendidos, {
-        type: 'doughnut', // Cambiar a gráfico de dona
+        type: 'doughnut', 
         data: {
             labels: {!! json_encode(array_keys($productosMasVendidos)) !!},
             datasets: [{
@@ -140,7 +140,7 @@
     // Productos menos vendidos
     var ctxMenosVendidos = document.getElementById('chartMenosVendidos').getContext('2d');
     new Chart(ctxMenosVendidos, {
-        type: 'doughnut', // Cambiar a gráfico de dona
+        type: 'doughnut', 
         data: {
             labels: {!! json_encode(array_keys($productosMenosVendidos)) !!},
             datasets: [{
