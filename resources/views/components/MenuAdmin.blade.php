@@ -94,11 +94,17 @@
                
             </ul>
             <div class="sidebar-footer">
-                <a href="/" class="sidebar-link">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" class="sidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="lni lni-exit icono"></i>
                     <span>Cerrar sesión</span>
                 </a>
             </div>
+            
+
+            <i class="lni lni-exit icono"></i>
         </aside>
         <div class="main p-3">
             <div class="">

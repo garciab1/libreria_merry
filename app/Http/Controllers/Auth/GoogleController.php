@@ -120,5 +120,14 @@ class GoogleController extends Controller
         }
         return null;
     }
+
+    public function logout()
+{
+    Auth::logout(); // Cierra la sesión de Laravel
+    session()->flush(); // Elimina todos los datos de la sesión
+
+    return redirect('/'); // Redirige a la página principal o a donde desees
+}
+
 }
 

@@ -19,6 +19,8 @@ use App\Http\Controllers\HomeControler;
     Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('auth/callback/google', [GoogleController::class, 'handleGoogleCallback']);
     Route::get('/testfire', [GoogleController::class, 'testFirebaseConnection']);
+    Route::post('/logout', [GoogleController::class, 'logout'])->name('logout');
+
 
     //RutasBasicas
     Route::get('/', [HomeController::class,'index']);
@@ -69,6 +71,7 @@ use App\Http\Controllers\HomeControler;
         
         //Ruta de inicio user
         Route::get('/inicio_user', [InicioUser_Controller::class, 'inicio_user'])->name('IniUser');
+
 
         //Rutas creadas para uso de la base de datos para realizar venta USER
         Route::get('/realizarVentaUser', [RealizarVentaUserController::class, 'indexRuser'])->name('RealizarVentaUser.index');

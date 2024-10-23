@@ -48,7 +48,7 @@
                 </li>
                 <li class="sidebar-item">
                     <a href="/realizarVentaUser" class="sidebar-link">
-                        <i class="lni lni-coin icono" ></i>
+                        <i class="bi bi-cart icono"></i>
                         <span>Realizar venta</span>
                     </a>
                 </li>
@@ -72,11 +72,15 @@
                
             </ul>
             <div class="sidebar-footer">
-                <a href="/" class="sidebar-link">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" class="sidebar-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="lni lni-exit icono"></i>
                     <span>Cerrar sesión</span>
                 </a>
             </div>
+            
         </aside>
         <div class="main p-3">
             <div class="">
