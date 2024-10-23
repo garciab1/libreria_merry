@@ -10,6 +10,8 @@
 
 
     </div>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         document.getElementById('searchInput').addEventListener('input', function() {

@@ -98,6 +98,16 @@
                         </div>
                     </a>
                 </div>
+
+                <div class="col-md-4 mb-4">
+                    <a href="/estadisticas" class="tarjeta-efecto d-block">
+                        <div class="card-body text-center">
+                            <img src="{{ asset('images/nuevos/estadisticas.png') }}" alt="Descripción de la imagen" width="100">
+                            <br><br>
+                            <h5>Estadísticas</h5>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

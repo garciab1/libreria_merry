@@ -7,6 +7,7 @@ use App\Http\Controllers\InicioUser_Controller;
 use App\Http\Controllers\Firebase\ContactController;
 use App\Http\Controllers\Firebase\NewproductoController;
 use App\Http\Controllers\Firebase\EmpleadosController;
+use App\Http\Controllers\Firebase\EstadisticasController;
 use App\Http\Controllers\Firebase\RealizarVentaController;
 use App\Http\Controllers\Firebase\RealizarVentaUserController;
 use App\Http\Middleware\CheckRole;
@@ -51,6 +52,9 @@ use App\Http\Controllers\HomeControler;
         //Rutas para Empleados admin
         Route::get('/empleados2', [EmpleadosController::class, 'indexEmpleados']); //Ver listado admin
         Route::get('/add-empleado', [EmpleadosController::class, 'createEmpleado']); //vista agregar empleado
+
+        Route::get('/estadisticas', [EstadisticasController::class, 'estadisticas']); //Ver estadísticas
+
         Route::post('/add-empleado', [EmpleadosController::class, 'storeEmpleado']); //guardar
         Route::get('edit-empleado/{id}', [EmpleadosController::class, 'editEmpleado']); //mostrar editar
         Route::put('update-empleado/{id}', [EmpleadosController::class, 'updateEmpleado']); //actualizar
