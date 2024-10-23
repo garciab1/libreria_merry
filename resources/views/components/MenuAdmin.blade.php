@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="icon" href="{{asset('images/icono.png')}}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -23,6 +24,11 @@
             background-color: #4a4948; /* Color de fondo al pasar el ratón (OrangeRed) */
             border-color: #4a4948; /* Borde al pasar el ratón */
         }
+
+        .sidebar-link:hover {
+        text-decoration: none; /* Asegúrate de que no haya subrayado al pasar el ratón */
+    }
+        
     </style>
 </head>
 
@@ -47,7 +53,7 @@
                 </li>
                 <li class="sidebar-item">
                     <a href="/realizarVentaAdmin" class="sidebar-link">
-                        <i class="lni lni-coin icono "></i>
+                        <i class="bi bi-cart icono"></i>
                         <span>Realizar venta</span>
                     </a>
                 </li>
@@ -77,6 +83,12 @@
                     <a href="/empleados2" class="sidebar-link">
                         <i class="lni lni-briefcase icono"></i>
                         <span>Empleados</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="/estadisticas" class="sidebar-link">
+                        <i class="bi bi-clipboard-data icono"></i>
+                        <span>Estadísticas</span>
                     </a>
                 </li>
                

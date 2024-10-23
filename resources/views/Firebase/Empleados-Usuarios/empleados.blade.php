@@ -12,10 +12,15 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4>Empleados 
-                        <input type="text" id="searchInput" class="form-control float-end ms-2" placeholder="Buscar..." style="max-width: 250px; margin-right: 15px;">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Empleados
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="searchInput" class="form-control ms-2" placeholder="Buscar..." style="max-width: 250px; margin-right: 15px;">
+                            <a href="/inicio_admin" class="btn btn-primary">Volver</a>
+                        </div>
                     </h4>
                 </div>
+                
                 <div style="max-height: 400px; overflow-y: auto;"> <!-- Scroll con altura limitada -->
                     <table class="table table-bordered">
                         <thead>

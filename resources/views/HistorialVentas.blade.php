@@ -11,11 +11,15 @@
                 @endif
     
                 <div class="card">
-                    <div class="card-header">
-                        <h4>Historial de Ventas
-                            <input type="text" id="searchInput" class="form-control float-end ms-2" placeholder="Buscar ventas..." style="max-width: 250px;">
-                        </h4>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Empleados</h4>
+                        <div class="d-flex align-items-center">
+                            <input type="text" id="searchInput" class="form-control ms-2" placeholder="Buscar..." style="max-width: 250px; margin-right: 15px;">
+                            <a href="/inicio_admin" class="btn btn-primary">Volver</a>
+                        </div>
                     </div>
+                    
+                    
     
                     <div style="max-height: 400px; overflow-y: auto;">
                         <table class="table table-bordered">
