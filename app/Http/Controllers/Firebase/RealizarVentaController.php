@@ -95,9 +95,10 @@ class RealizarVentaController extends Controller
 
         // Redirigir a la vista del comprobante
         return redirect()->route('RealizarVenta.imprimirComprobante', $ventaRef->getKey())->with('status', 'Venta realizada exitosamente.');
-    } else {
-        return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
     }
+        else {
+            return redirect()->route('RealizarVenta.index')->with('status', 'No se pudo realizar la venta.');
+        }
     }
     
 
@@ -122,9 +123,7 @@ class RealizarVentaController extends Controller
     }
 
         
-
-    //Funcion para visualizar el historial de la venta
-    public function showVentas()
+        public function showVentas()
     {
         $ventas = $this->database->getReference($this->tablaVentas)->getValue();
         $productos = $this->database->getReference($this->tablaProductos)->getValue();
@@ -133,6 +132,7 @@ class RealizarVentaController extends Controller
             $ventas = [];
         }
 
+        // Asigna nombres de los productos a cada artículo
         foreach ($ventas as &$venta) {
             foreach ($venta['articulos'] as &$articulo) {
                 $codigoProducto = $articulo['codigo'];
@@ -144,9 +144,12 @@ class RealizarVentaController extends Controller
             }
         }
 
+        // Ordenar las ventas por fecha de venta sin cambiar los IDs
+        $fechas = array_column($ventas, 'fecha_venta');
+        array_multisort(array_map('strtotime', $fechas), SORT_DESC, $ventas);
+
         return view('HistorialVentas', compact('ventas'));
     }
-
     public function imprimirComprobante($ventaId)
     {
         // Obtener la venta específica desde Firebase
@@ -174,11 +177,14 @@ class RealizarVentaController extends Controller
         }
     
         // Generar el PDF
-        $pdf = Pdf::loadView('comprobanteVentaUser', compact('venta'));
+        $pdf = Pdf::loadView('comprobanteVenta', compact('venta'));
     
-        // Descargar el PDF o mostrarlo en pantalla
-        return $pdf->stream('comprobante_venta_' . $ventaId . '.pdf');
+        // Configurar las cabeceras para que el PDF se abra en una nueva pestaña
+        return response($pdf->stream('comprobante_venta_' . $ventaId . '.pdf'))
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="comprobante_venta_' . $ventaId . '.pdf"');
     }
+    
     
 
 

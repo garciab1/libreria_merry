@@ -124,42 +124,42 @@ class RealizarVentaUserController extends Controller
 
  
     
-    public function imprimirComprobante($ventaId)
+        public function imprimirComprobante($ventaId)
     {
         // Obtener la venta específica desde Firebase
         $venta = $this->database->getReference($this->tablaVentas . '/' . $ventaId)->getValue();
-    
+
         if (!$venta) {
             return redirect()->route('RealizarVentaUser.index')->with('status', 'Venta no encontrada.');
         }
-    
+
         // Verificar que 'articulos' esté definido y sea un array
         if (!isset($venta['articulos']) || !is_array($venta['articulos'])) {
             return redirect()->route('RealizarVentaUser.index')->with('status', 'No se encontraron artículos para esta venta.');
         }
-    
+
         // Asegúrate de que cada artículo tenga el nombre del producto
         foreach ($venta['articulos'] as &$articulo) {
             $codigoProducto = $articulo['codigo'];
             $producto = $this->database->getReference($this->tablaProductos . '/' . $codigoProducto)->getValue();
-    
+
             if ($producto && isset($producto['nombre_producto'])) {
                 $articulo['nombre_producto'] = $producto['nombre_producto'];
             } else {
                 $articulo['nombre_producto'] = 'Producto desconocido';
             }
         }
-    
+
         // Generar el PDF
         $pdf = Pdf::loadView('comprobanteVentaUser', compact('venta'));
-    
-        // Descargar el PDF o mostrarlo en pantalla
-        return $pdf->stream('comprobante_venta_' . $ventaId . '.pdf');
-    } 
-    
-    
-   
-    
+
+        // Configurar las cabeceras para que el PDF se abra en una nueva pestaña
+        return response($pdf->stream('comprobante_venta_' . $ventaId . '.pdf'))
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="comprobante_venta_' . $ventaId . '.pdf"');
+    }
+
+        
     
 
 }

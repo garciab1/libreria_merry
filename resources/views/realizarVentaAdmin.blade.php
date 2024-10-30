@@ -150,7 +150,7 @@
                                     <td>${articulo.nombre_producto}</td>
                                     <td>${disponible}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm agregarArticulo" 
+                                        <button type="button" class="btn btn-success btn-sm agregarArticulo" 
                                             data-id="${key}" 
                                             data-nombre="${articulo.nombre_producto}" 
                                             data-stock="${articulo.stock}" 
