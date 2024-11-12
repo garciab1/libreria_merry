@@ -24,8 +24,8 @@
 
             <div class="row mt-3">
                 <!-- Ventas del día -->
-                <div class="col-md-4">
-                    <div class="card text-center bg-success text-white">
+                <div class="col-md-3">
+                    <div class="card text-center bg-success text-white h-100">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-bag me-2"></i> Ventas del día
@@ -34,10 +34,10 @@
                         </div>
                     </div>
                 </div>
-                
+            
                 <!-- Ganancias de hoy -->
-                <div class="col-md-4">
-                    <div class="card text-center bg-info text-white">
+                <div class="col-md-3">
+                    <div class="card text-center bg-info text-white h-100">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-wallet me-2"></i> Ganancias de hoy
@@ -46,10 +46,10 @@
                         </div>
                     </div>
                 </div>
-                
+            
                 <!-- Ganancias este mes -->
-                <div class="col-md-4">
-                    <div class="card text-center bg-warning text-white">
+                <div class="col-md-3">
+                    <div class="card text-center bg-warning text-white h-100">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <i class="bi bi-graph-up me-2"></i> Ganancias este mes
@@ -58,7 +58,21 @@
                         </div>
                     </div>
                 </div>
+            
+                <!-- Ganancias del año -->
+                <div class="col-md-3">
+                    <div class="card text-center bg-primary text-white h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="bi bi-graph-up me-2"></i> Ganancias del año
+                            </h5>
+                            <p class="card-text display-4"><strong>${{ number_format($gananciasAno, 2) }}</strong></p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+            
 
             <!-- Parte de los gráficos -->
             <div class="row mt-5">

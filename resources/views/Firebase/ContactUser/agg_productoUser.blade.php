@@ -128,6 +128,10 @@
                         timer: 3000,
                         showConfirmButton: false
                     });
+                     // Limpiar los campos del formulario automáticamente
+                     this.reset();
+                    this.classList.remove('was-validated');
+                    
                 });
             } else {
                 this.classList.add('was-validated');

@@ -21,15 +21,17 @@ class EstadisticasController extends Controller
         // Obtener ventas y productos desde Firebase
         $ventas = $this->database->getReference('ventas')->getValue() ?? [];
         $productos = $this->database->getReference('productos')->getValue() ?? [];
-    
+
         // Inicializar variables
         $gananciasDia = 0;
         $ventasDia = 0; // Variable para contar las ventas del día
         $gananciasMes = 0;
+        $gananciasAno = 0; // Variable para las ganancias del año
         $fechaHoy = Carbon::now()->format('Y-m-d'); // Fecha de hoy (sin hora)
         $mesActual = Carbon::now()->format('Y-m'); // Mes actual
-    
-        // Calcular ventas y ganancias del día y del mes
+        $anoActual = Carbon::now()->format('Y'); // Año actual
+
+        // Calcular ventas y ganancias del día, del mes y del año
         foreach ($ventas as $venta) {
             if (isset($venta['fecha_venta']) && isset($venta['total'])) {
                 // Convertir la fecha de la venta a un objeto Carbon, ignorando la hora
@@ -40,10 +42,15 @@ class EstadisticasController extends Controller
                     $gananciasDia += $venta['total']; // Sumar las ganancias de la venta
                     $ventasDia++; // Contar las ventas del día
                 }
-    
+
                 // Verificar si la venta es del mes actual
                 if (Carbon::parse($venta['fecha_venta'])->format('Y-m') === $mesActual) {
                     $gananciasMes += $venta['total']; // Sumar las ganancias del mes
+                }
+
+                // Verificar si la venta es del año actual
+                if (Carbon::parse($venta['fecha_venta'])->format('Y') === $anoActual) {
+                    $gananciasAno += $venta['total']; // Sumar las ganancias del año
                 }
             }
         }
@@ -82,10 +89,12 @@ class EstadisticasController extends Controller
             'ventasDia' => $ventasDia,
             'gananciasDia' => $gananciasDia,
             'gananciasMes' => $gananciasMes,
+            'gananciasAno' => $gananciasAno, // Pasamos las ganancias del año
             'productosMasVendidos' => $productosMasVendidos,
             'productosMenosVendidos' => $productosMenosVendidos,
             'productosStockBajo' => $productosStockBajo,
             'productosStockAlto' => $productosStockAlto,
         ]);
     }
+
 }
