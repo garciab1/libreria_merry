@@ -22,7 +22,6 @@
                 </div>
             </div>
 
-            
             <div class="row mt-3">
                 <!-- Ventas del día -->
                 <div class="col-md-4">
@@ -156,51 +155,52 @@
     // Productos con mayor stock
     var ctxMayorStock = document.getElementById('chartMayorStock').getContext('2d');
     new Chart(ctxMayorStock, {
-        type: 'bar',
+        type: 'bar', 
         data: {
             labels: {!! json_encode(array_keys($productosStockAlto)) !!},
             datasets: [{
                 label: 'Stock',
                 data: {!! json_encode(array_values($productosStockAlto)) !!},
-                backgroundColor: ['#27ae60', '#2ecc71', '#16a085'],
+                backgroundColor: 'green',
             }]
         },
         options: {
-            responsive: true,
-            scales: {
-                y: { beginAtZero: true }
-            }
+            responsive: true
         }
     });
 
     // Productos con menor stock
     var ctxMenorStock = document.getElementById('chartMenorStock').getContext('2d');
     new Chart(ctxMenorStock, {
-        type: 'bar',
+        type: 'bar', 
         data: {
             labels: {!! json_encode(array_keys($productosStockBajo)) !!},
             datasets: [{
                 label: 'Stock',
                 data: {!! json_encode(array_values($productosStockBajo)) !!},
-                backgroundColor: ['#e74c3c', '#e67e22', '#f39c12'],
+                backgroundColor: 'red',
             }]
         },
         options: {
-            responsive: true,
-            scales: {
-                y: { beginAtZero: true }
-            }
+            responsive: true
         }
     });
 
-    // Función para generar colores aleatorios
+    // Función para obtener colores aleatorios
     function getRandomColors(num) {
-        const colors = [];
-        for (let i = 0; i < num; i++) {
-            const randomColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
-            colors.push(randomColor);
+        var colors = [];
+        for (var i = 0; i < num; i++) {
+            colors.push('rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')');
         }
         return colors;
     }
 </script>
+
+<script>
+    console.log("Valor de ganancias del día: ", @json($gananciasDia));
+    console.log("Valor de ganancias del día: ", @json($ventasDia));
+    console.log("Valor de ganancias del día: ", @json($gananciasMes));
+</script>
+
+
 @endsection
