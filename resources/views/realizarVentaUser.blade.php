@@ -29,7 +29,7 @@
 
                 <div class="form-group">
                     <label for="fecha_venta">Fecha de la Venta</label>
-                    <input type="datetime-local" class="form-control" id="fecha_venta" name="fecha_venta" required>
+                    <input type="datetime-local" class="form-control" id="fecha_venta" name="fecha_venta" readonly required>
                 </div>
 
                 <div class="form-group">
